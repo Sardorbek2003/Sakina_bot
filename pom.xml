@@ -13,7 +13,7 @@
         <module>Backent</module>
         <module>Front</module>
         <module>BotService</module>
-    </modules>
+     </modules>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
@@ -31,7 +31,6 @@
             <artifactId>telegrambots</artifactId>
             <version>6.9.7.1</version>
         </dependency>
-
     </dependencies>
 
 </project>
