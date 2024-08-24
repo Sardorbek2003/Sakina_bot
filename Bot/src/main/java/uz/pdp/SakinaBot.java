@@ -6,8 +6,8 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import uz.pdp.kitoblar.Kitoblar;
-import uz.pdp.namozVaqtlari.NamozVaqtlari;
-import uz.pdp.namozVaqtlari.NamozVaqtlariInline;
+import uz.pdp.namozVaqtlar.NamozVaqtlari;
+import uz.pdp.namozVaqtlar.NamozVaqtlariInline;
 
 import java.util.Date;
 
@@ -41,6 +41,11 @@ public class SakinaBot extends TelegramLongPollingBot {
             SendMessage sendMessage = NamozVaqtlari.getNamozVatlari(message.getChatId());
             sendMessage.setText("Namoz Vaqtlari");
             execute_(sendMessage);
+            }
+        }
+        if (update.hasCallbackQuery()){
+            if (update.getCallbackQuery().getData().equals("next")){
+
             }
         }
     }
