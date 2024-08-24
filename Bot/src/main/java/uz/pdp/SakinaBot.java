@@ -6,6 +6,10 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import uz.pdp.kitoblar.Kitoblar;
+import uz.pdp.namozVaqtlari.NamozVaqtlari;
+import uz.pdp.namozVaqtlari.NamozVaqtlariInline;
+
+import java.util.Date;
 
 public class SakinaBot extends TelegramLongPollingBot {
 
@@ -14,21 +18,29 @@ public class SakinaBot extends TelegramLongPollingBot {
         Message message = update.getMessage();
         if (message != null && message.hasText()) {
             String text = message.getText();
-            if (text.equals("/start") || text.equals("showMenyu")) {
-                SendMessage sendMessage = MenyuService.showMenyu(update);
-                execute_(sendMessage);  // Yaxshi nomlangan metodni chaqirish
+            if (text.equals("/start") || message.getText().startsWith("Back")) {
+                SendMessage sendMessage = MenyuService.showMenyu(message.getChatId());
+                execute_(sendMessage);
             }
-            if (message.getText().startsWith("Islomiy Kitoblar")) {
+           else if (message.getText().startsWith("Back")) {
+                SendMessage sendMessage = MenyuService.showMenyu(message.getChatId());
+                execute_(sendMessage);
+            }
+           else if (message.getText().startsWith("Islomiy Kitoblar")) {
                 System.out.println("if");
-
-
                 SendMessage sendMessage = Kitoblar.bookMenyu(message.getChatId());
                 sendMessage.setText("Islomiy Kitoblar");
                 execute_(sendMessage);
             }
-            if (message.getText().startsWith("Back")){
-                SendMessage sendMessage = MenyuService.showMenyu(update);
-                execute_(sendMessage);  // Yaxshi nomlangan metodni chaqirish
+           else if (message.getText().equals("Namoz vaqtlari\uD83D\uDD52")){
+                SendMessage sendMessage = NamozVaqtlariInline.sendPrayerTimesKeyboard(message.getChatId());
+                sendMessage.setText(new Date().toString());
+                execute_(sendMessage);
+            }
+           else if (message.getText().startsWith("Namoz Vaqtlari")) {
+            SendMessage sendMessage = NamozVaqtlari.getNamozVatlari(message.getChatId());
+            sendMessage.setText("Namoz Vaqtlari");
+            execute_(sendMessage);
             }
         }
     }
