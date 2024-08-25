@@ -2,9 +2,11 @@ package uz.pdp;
 
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import uz.pdp.engYaqinNamoz.EngYaqinNamoz;
 import uz.pdp.kitoblar.Kitoblar;
 import uz.pdp.namozVaqtlar.NamozVaqtlari;
 import uz.pdp.namozVaqtlar.NamozVaqtlariInline;
@@ -15,32 +17,41 @@ public class SakinaBot extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
-        Message message = update.getMessage();
-        if (message != null && message.hasText()) {
-            String text = message.getText();
-            if (text.equals("/start") || message.getText().startsWith("Back")) {
-                SendMessage sendMessage = MenyuService.showMenyu(message.getChatId());
-                execute_(sendMessage);
+        if (update.hasMessage()) {
+            Message message = update.getMessage();
+            if (message != null && message.hasText()) {
+                String text = message.getText();
+                if (text.equals("/start") || text.startsWith("Back")) {
+                    SendMessage sendMessage = MenyuService.showMenyu(message.getChatId());
+                    execute_(sendMessage);
+                } else if (text.startsWith("Islomiy Kitoblar")) {
+                    SendMessage sendMessage = Kitoblar.bookMenyu(message.getChatId());
+                    sendMessage.setText("Islomiy Kitoblar");
+                    execute_(sendMessage);
+                } else if (text.equals("Namoz vaqtlari\uD83D\uDD52")) {
+                    SendMessage sendMessage = NamozVaqtlariInline.sendPrayerTimesKeyboard(message.getChatId());
+                    sendMessage.setText(new Date().toString());
+                    execute_(sendMessage);
+                } else if (text.startsWith("Namoz Vaqtlari")) {
+                    SendMessage sendMessage = NamozVaqtlari.getNamozVatlari(message.getChatId());
+                    sendMessage.setText("Namoz Vaqtlari");
+                    execute_(sendMessage);
+                } else if (text.startsWith("Eng Yaqin Namoz\uD83D\uDCAC")) {
+                    SendMessage sendMessage = EngYaqinNamoz.getNextPrayer(message.getChatId());
+                    execute_(sendMessage);
+                }
             }
-           else if (message.getText().startsWith("Back")) {
-                SendMessage sendMessage = MenyuService.showMenyu(message.getChatId());
+        } else if (update.hasCallbackQuery()) {
+            CallbackQuery callbackQuery = update.getCallbackQuery();
+            String data = callbackQuery.getData();
+            long chatId = callbackQuery.getMessage().getChatId();
+
+            if (data.equals("someCallbackData")) {
+
+                SendMessage sendMessage = new SendMessage();
+                sendMessage.setChatId(chatId);
+                sendMessage.setText("Callback query handled: " + data);
                 execute_(sendMessage);
-            }
-           else if (message.getText().startsWith("Islomiy Kitoblar")) {
-                System.out.println("if");
-                SendMessage sendMessage = Kitoblar.bookMenyu(message.getChatId());
-                sendMessage.setText("Islomiy Kitoblar");
-                execute_(sendMessage);
-            }
-           else if (message.getText().equals("Namoz vaqtlari\uD83D\uDD52")){
-                SendMessage sendMessage = NamozVaqtlariInline.sendPrayerTimesKeyboard(message.getChatId());
-                sendMessage.setText(new Date().toString());
-                execute_(sendMessage);
-            }
-           else if (message.getText().startsWith("Namoz Vaqtlari")) {
-            SendMessage sendMessage = NamozVaqtlari.getNamozVatlari(message.getChatId());
-            sendMessage.setText("Namoz Vaqtlari");
-            execute_(sendMessage);
             }
         }
         if (update.hasCallbackQuery()){
@@ -60,7 +71,7 @@ public class SakinaBot extends TelegramLongPollingBot {
         return "7288467792:AAHKQse3hGoUFjZD2ehOTescDE_5rrlod-w";  // Tokenni to'g'ri kiriting
     }
 
-    private void execute_(SendMessage sendMessage) {  // Metod nomi o'zgartirildi
+    private void execute_(SendMessage sendMessage) {
         try {
             execute(sendMessage);
         } catch (TelegramApiException e) {
