@@ -5,13 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="534b0794-8f85-43fb-adfe-5d3f1591786e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Backent/src/main/java/uz/pdp/namozVaqtlari.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/namozVaqtlari/NamozVaqtlari.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/namozVaqtlari/NamozVaqtlariInline.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/file/namoz_vaqtlari.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/engYaqinNamoz/EngYaqinNamoz.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/engYaqinNamoz/Root.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/engYaqinNamoz/Times.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/SakinaBot.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/SakinaBot.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/MenyuService.java" beforeDir="false" afterPath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/MenyuService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,13 +44,46 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;jdk.selected.JAVA_MODULE&quot;: &quot;openjdk-21&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/engYaqinNamoz" />
+      <recent name="$PROJECT_DIR$/Bot/src/main/java/uz/pdp" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="uz.pdp.Main" />
+      <module name="Bot" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="uz.pdp.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="jdk-21.0.2-openjdk-21.0.2-4caba194b151-322ed176" />
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.15989.150" />
+        <option value="bundled-js-predefined-1d06a55b98c1-91d5c284f522-JavaScript-IU-241.15989.150" />
       </set>
     </attachedChunks>
   </component>
@@ -62,7 +95,13 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1724496676516</updated>
+      <workItem from="1724523427551" duration="870000" />
+      <workItem from="1724571075912" duration="961000" />
+      <workItem from="1724572042384" duration="1000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
 </project>
