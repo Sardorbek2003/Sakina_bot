@@ -4,15 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="534b0794-8f85-43fb-adfe-5d3f1591786e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/engYaqinNamoz/EngYaqinNamoz.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/engYaqinNamoz/Root.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/engYaqinNamoz/Times.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/SakinaBot.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/SakinaBot.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-    </list>
+    <list default="true" id="534b0794-8f85-43fb-adfe-5d3f1591786e" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -98,6 +90,7 @@
       <workItem from="1724523427551" duration="870000" />
       <workItem from="1724571075912" duration="961000" />
       <workItem from="1724572042384" duration="1000" />
+      <workItem from="1724572317541" duration="4000" />
     </task>
     <servers />
   </component>
