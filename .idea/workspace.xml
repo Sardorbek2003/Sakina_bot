@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="534b0794-8f85-43fb-adfe-5d3f1591786e" name="Changes" comment="" />
+    <list default="true" id="534b0794-8f85-43fb-adfe-5d3f1591786e" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/hijriSana/HijriSana.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/SakinaBot.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/SakinaBot.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -91,7 +95,7 @@
       <workItem from="1724571075912" duration="961000" />
       <workItem from="1724572042384" duration="1000" />
       <workItem from="1724572317541" duration="4000" />
-      <workItem from="1724573671715" duration="384000" />
+      <workItem from="1724573671715" duration="5609000" />
     </task>
     <servers />
   </component>
