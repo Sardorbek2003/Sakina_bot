@@ -1,4 +1,4 @@
-package uz.pdp.bugungiNamozVaqtlari;
+package uz.pdp.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
@@ -17,7 +17,6 @@ public  class Root{
     public int month;
     public int day;
     public Date date;
-    public aaaa hijriyDate;
     public String weekday;
     public Times times;
 }

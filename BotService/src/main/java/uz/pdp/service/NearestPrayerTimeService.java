@@ -1,4 +1,4 @@
-package uz.pdp.engYaqinNamoz;
+package uz.pdp.service;
 
 import org.json.JSONObject;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -12,7 +12,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
-public class EngYaqinNamoz {
+public class NearestPrayerTimeService {
 
     public static SendMessage getNextPrayer(long chatId) {
         SendMessage sendMessage = new SendMessage();

@@ -1,48 +1,49 @@
-package uz.pdp.namozVaqtlar;
+package uz.pdp.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
-import uz.pdp.bugungiNamozVaqtlari.Root;
-import uz.pdp.util.MonthlyPrayerTimesUtil;
+import uz.pdp.model.Root;
+import uz.pdp.service.util.JsonUtil;
+import uz.pdp.service.util.MonthlyPrayerTimesUtil;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-public class NamozVaqtlariInline {
+public class PrayerTimeInlineService {
+    private static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    private static final String PATH = "file/namoz_vaqtlari.json";
 
     public static Root getTodayTimes() {
         Date date = new Date();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String str = simpleDateFormat.format(date);
-        int day = Integer.valueOf(str.substring(8));
-        int month = Integer.valueOf(str.substring(5, 7));
-        File file = new File("file/namoz_vaqtlari.json");
-        List<Root> rootList;
-        try {
-            rootList = new ObjectMapper().readValue(file, new TypeReference<>() {
-            });
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        String[] split = str.split("-");
+        String day = split[2];
+        String month = split[1];
+        return rootList(day, month);
+
+    }
+
+    private static Root rootList(String day, String month) {
+        List<Root> roots = JsonUtil.readGson(PATH, new TypeReference<List<Root>>() {});
         Root todayRoot = new Root();
-        for (Root root : rootList) {
-            if (root.getDay() == day && root.getMonth() == month) {
+        for (Root root : roots) {
+            if (root.getDay() == Integer.parseInt(day) && root.getMonth() == Integer.parseInt(month)) {
                 todayRoot = root;
             }
         }
         return todayRoot;
     }
+
 
     public static SendMessage sendPrayerTimesKeyboard(long chatId) {
         MonthlyPrayerTimesUtil.write();
@@ -56,7 +57,7 @@ public class NamozVaqtlariInline {
         backButton1.setText(" ▶\uFE0F ");
         backButton.setCallbackData("back");
         backButton1.setCallbackData("next");
-        String monthName = new DateFormatSymbols().getMonths()[root.getMonth()-1];
+        String monthName = new DateFormatSymbols().getMonths()[root.getMonth() - 1];
         backButton2.setText(root.getDay() + " - " + monthName);
         backButton2.setCallbackData("date");
 
@@ -105,7 +106,6 @@ public class NamozVaqtlariInline {
         rows.add(row6);
 
         inlineKeyboardMarkup.setKeyboard(rows);
-
         SendMessage message = new SendMessage();
         message.setChatId(chatId);
         message.setReplyMarkup(inlineKeyboardMarkup);
