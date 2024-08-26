@@ -1,4 +1,4 @@
-package uz.pdp.hijriSana;
+package uz.pdp.service;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -6,7 +6,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import org.json.JSONObject;
 
-public class HijriSana {
+public class HijriDateService {
     public static String fetchHijriDate() {
         String apiUrl = "https://islomapi.uz/api/present/day?region=Toshkent";
         StringBuilder response = new StringBuilder();
