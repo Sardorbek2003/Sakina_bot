@@ -17,7 +17,7 @@ public  class Root{
     public int month;
     public int day;
     public Date date;
-    public aaaa hijriyDate;
+    public HijriDate hijriyDate;
     public String weekday;
     public Times times;
 }

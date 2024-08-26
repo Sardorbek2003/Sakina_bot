@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
-public  class aaaa {
+public  class HijriDate {
     public String month;
     public int day;
 }

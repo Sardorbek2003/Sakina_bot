@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MenyuService {
+
     public static SendMessage showMenyu(Long chatId) {
 
         SendMessage sendMessage = new SendMessage();
@@ -16,8 +17,7 @@ public class MenyuService {
 
         ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
         List<KeyboardRow> list = new ArrayList<>();
-
-        KeyboardRow keyboardRow = new KeyboardRow();
+         KeyboardRow keyboardRow = new KeyboardRow();
         keyboardRow.add(new KeyboardButton("Namoz Vaqtlari\uD83D\uDD58"));
         keyboardRow.add(new KeyboardButton("Eng Yaqin Namoz\uD83D\uDCAC"));
         keyboardRow.add(new KeyboardButton("Eng yaqin Masjidlar\uD83D\uDD4C"));
@@ -25,7 +25,7 @@ public class MenyuService {
 
         KeyboardRow keyboardRow1 = new KeyboardRow();
         keyboardRow1.add(new KeyboardButton("Tasbex\uD83D\uDCFF"));
-        keyboardRow1.add(new KeyboardButton("Quroni Karimdan Bazi Suralar\uD83D\uDCD6"));
+        keyboardRow1.add(new KeyboardButton("Quroni Karim\uD83D\uDCD6"));
         keyboardRow1.add(new KeyboardButton("Muhim Duolar\uD83E\uDD32"));
         list.add(keyboardRow1);
 
@@ -35,6 +35,7 @@ public class MenyuService {
         list.add(keyboardRow2);
 
         replyKeyboardMarkup.setKeyboard(list);
+        replyKeyboardMarkup.setResizeKeyboard(true);
 
         sendMessage.setText("Welcome Bot");
         sendMessage.setReplyMarkup(replyKeyboardMarkup);
@@ -42,4 +43,5 @@ public class MenyuService {
         return sendMessage;
 
     }
+
 }

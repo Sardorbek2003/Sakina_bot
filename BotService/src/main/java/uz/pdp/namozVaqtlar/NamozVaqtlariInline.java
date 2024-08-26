@@ -12,10 +12,8 @@ import java.io.File;
 import java.io.IOException;
 import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Calendar;
+
 import java.util.Date;
 import java.util.List;
 
@@ -30,8 +28,7 @@ public class NamozVaqtlariInline {
         File file = new File("file/namoz_vaqtlari.json");
         List<Root> rootList;
         try {
-            rootList = new ObjectMapper().readValue(file, new TypeReference<>() {
-            });
+            rootList = new ObjectMapper().readValue(file, new TypeReference<>() {});
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -47,6 +44,7 @@ public class NamozVaqtlariInline {
     public static SendMessage sendPrayerTimesKeyboard(long chatId) {
         MonthlyPrayerTimesUtil.write();
         Root root = getTodayTimes();
+
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
 
         InlineKeyboardButton backButton = new InlineKeyboardButton();
@@ -76,9 +74,9 @@ public class NamozVaqtlariInline {
         shom.setText("Shom:  " + root.getTimes().getShom_iftor());
         shom.setCallbackData("shom");
 
-        InlineKeyboardButton xuftom = new InlineKeyboardButton();
-        xuftom.setText("Huftom:  " + root.getTimes().getHufton());
-        xuftom.setCallbackData("xuftom");
+        InlineKeyboardButton xufton = new InlineKeyboardButton();
+        xufton.setText("Huftom:  " + root.getTimes().getHufton());
+        xufton.setCallbackData("xuftom");
 
         List<InlineKeyboardButton> row1 = new ArrayList<>();
         row1.add(bomdod);
@@ -89,12 +87,11 @@ public class NamozVaqtlariInline {
         List<InlineKeyboardButton> row4 = new ArrayList<>();
         row4.add(shom);
         List<InlineKeyboardButton> row5 = new ArrayList<>();
-        row5.add(xuftom);
+        row5.add(xufton);
         List<InlineKeyboardButton> row6 = new ArrayList<>();
         row6.add(backButton);
         row6.add(backButton2);
         row6.add(backButton1);
-
 
         List<List<InlineKeyboardButton>> rows = new ArrayList<>();
         rows.add(row1);
@@ -105,11 +102,9 @@ public class NamozVaqtlariInline {
         rows.add(row6);
 
         inlineKeyboardMarkup.setKeyboard(rows);
-
         SendMessage message = new SendMessage();
         message.setChatId(chatId);
         message.setReplyMarkup(inlineKeyboardMarkup);
-
         return message;
     }
 }

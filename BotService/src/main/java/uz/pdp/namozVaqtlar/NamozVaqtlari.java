@@ -1,6 +1,7 @@
 package uz.pdp.namozVaqtlar;
 
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
@@ -24,8 +25,9 @@ public class NamozVaqtlari {
         list.add(keyboardRow1);
 
         replyKeyboardMarkup.setKeyboard(list);
+        replyKeyboardMarkup.setResizeKeyboard(true);
         sendMessage.setReplyMarkup(replyKeyboardMarkup);
-        
-        return sendMessage;
+
+         return sendMessage;
     }
 }
