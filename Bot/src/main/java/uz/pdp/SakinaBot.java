@@ -1,24 +1,23 @@
 package uz.pdp;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import org.apache.commons.lang3.StringUtils;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageReplyMarkup;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Location;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-import uz.pdp.service.NearestPrayerTimeService;
-import uz.pdp.service.MosqueService;
-import uz.pdp.service.HijriDateService;
-import uz.pdp.service.BookService;
-import uz.pdp.service.PrayerTimeService;
-import uz.pdp.service.PrayerTimeInlineService;
-import uz.pdp.service.MenuService;
+import uz.pdp.model.SuraIndex;
+import uz.pdp.service.*;
+import uz.pdp.service.util.JsonUtil;
 
 import java.util.Date;
+import java.util.List;
 
-import static uz.pdp.BotConstants.*;
+import static uz.pdp.BotConstants.START;
 
 public class SakinaBot extends TelegramLongPollingBot {
 
@@ -29,8 +28,10 @@ public class SakinaBot extends TelegramLongPollingBot {
             if (message != null && message.hasText()) {
                 String text = message.getText();
                 long chatId = message.getChatId();
+                System.out.println(chatId);
 
                 if (StringUtils.equals(text, START) || text.startsWith("Back")) {
+                    System.out.println(message.getChatId());
                     SendMessage sendMessage = MenuService.showMenyu(chatId);
                     execute_(sendMessage);
                 } else if (StringUtils.startsWith(text, "Islomiy Kitoblar")) {
@@ -58,6 +59,17 @@ public class SakinaBot extends TelegramLongPollingBot {
                     SendMessage sendMessage = MosqueService.requestUserLocation(chatId);
                     sendMessage.setText("Yaqin masjidlar");
                     execute_(sendMessage);
+                } else if (text.equals("Quroni Karimdan Bazi Suralar\uD83D\uDCD6")) {
+                    List<SuraIndex> suraIndices = JsonUtil.readGson("BotService/src/test/file/suraIndex.json", new TypeReference<List<SuraIndex>>() {
+                    });
+                    for (SuraIndex index : suraIndices) {
+                        if (index.getChatId() == chatId) {
+                            index.setId(10);
+                        }
+                    }
+                    JsonUtil.writeGson(suraIndices, "BotService/src/test/file/suraIndex.json");
+                    SendMessage surah = QuroniKarimdanBaziSuralar.getSurah(message.getChatId());
+                    execute_(surah);
                 }
             } else if (message != null && message.hasLocation()) {
                 Location userLocation = message.getLocation();
@@ -72,6 +84,7 @@ public class SakinaBot extends TelegramLongPollingBot {
             CallbackQuery callbackQuery = update.getCallbackQuery();
             String data = callbackQuery.getData();
             long chatId = callbackQuery.getMessage().getChatId();
+            Integer inlineMessageId = callbackQuery.getMessage().getMessageId();
 
             if (data.equals("someCallbackData")) {
                 SendMessage sendMessage = new SendMessage();
@@ -79,7 +92,37 @@ public class SakinaBot extends TelegramLongPollingBot {
                 sendMessage.setText("Callback query handled: " + data);
                 execute_(sendMessage);
             }
-            if (data.equals("bomdod")){
+            if (data.equals("next")) {
+                next(chatId);
+                EditMessageReplyMarkup surah = QuroniKarimdanBaziSuralar.getSurah(chatId,inlineMessageId);
+                execute_update(surah);
+            }
+            if (data.equals("back")) {
+                back(chatId);
+                EditMessageReplyMarkup surah = QuroniKarimdanBaziSuralar.getSurah(chatId, inlineMessageId);
+                execute_update(surah);
+            }
+            if(data.startsWith("suralar")){
+                SendMessage sendMessage = GetSurahUrl.QuranMenyu(chatId,data);
+                execute_(sendMessage);
+            }
+            if (data.startsWith("lsuralar")) {
+
+                SendMessage sendMessage = new SendMessage();
+                String surah = GetSurahUrl.getLotinSurah(data);
+                sendMessage.setChatId(chatId);
+                sendMessage.setText(surah);
+                execute_(sendMessage);
+            }
+            if (data.startsWith("asuralar")) {
+
+                SendMessage sendMessage = new SendMessage();
+                String surah = GetSurahUrl.getAraSurah(data);
+                sendMessage.setChatId(chatId);
+                sendMessage.setText(surah);
+                execute_(sendMessage);
+            }
+            if (data.equals("bomdod")) {
                 SendMessage sendMessage = new SendMessage();
                 sendMessage.setText("1.Ният қилиш\n" +
                         "\n" +
@@ -100,9 +143,17 @@ public class SakinaBot extends TelegramLongPollingBot {
         return "7288467792:AAHKQse3hGoUFjZD2ehOTescDE_5rrlod-w";
     }
 
-    private void execute_(SendMessage sendMessage) {
+    private void execute_(SendMessage t) {
         try {
-            execute(sendMessage);
+            execute(t);
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void execute_update(EditMessageReplyMarkup t) {
+        try {
+            execute(t);
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
@@ -117,5 +168,31 @@ public class SakinaBot extends TelegramLongPollingBot {
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
+    }
+
+    private void next(long chatId) {
+        List<SuraIndex> suraIndices = JsonUtil.readGson("BotService/src/test/file/suraIndex.json", new TypeReference<List<SuraIndex>>() {
+        });
+        for (SuraIndex index : suraIndices) {
+            if (index.getChatId() == chatId) {
+                if (114 >= index.getId()) {
+                    index.setId(index.getId() + 10);
+                }
+            }
+        }
+        JsonUtil.writeGson(suraIndices, "BotService/src/test/file/suraIndex.json");
+    }
+
+    private void back(long chatId) {
+        List<SuraIndex> suraIndices = JsonUtil.readGson("BotService/src/test/file/suraIndex.json", new TypeReference<List<SuraIndex>>() {
+        });
+        for (SuraIndex index : suraIndices) {
+            if (index.getChatId() == chatId) {
+                if (10 <= index.getId()) {
+                    index.setId(index.getId() - 10);
+                }
+            }
+        }
+        JsonUtil.writeGson(suraIndices, "BotService/src/test/file/suraIndex.json");
     }
 }

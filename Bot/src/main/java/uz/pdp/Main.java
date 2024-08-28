@@ -1,5 +1,6 @@
 package uz.pdp;
 
+import org.json.HTTP;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.meta.generics.LongPollingBot;
