@@ -15,12 +15,10 @@ public class BotUtil {
     public static ReplyKeyboardMarkup replyKeyboardMarkup(List<String> data, int n) {
         return new ReplyKeyboardMarkup();
     }
-
     public static <T> InlineKeyboardMarkup inlineKeyboardMarkup(List<T> models, int n) {
         if (models.isEmpty()) {
             return new InlineKeyboardMarkup();
         }
-
         T t = models.get(0);
         if (t instanceof Root product) {
             InlineKeyboardButton button = new InlineKeyboardButton();
@@ -29,7 +27,6 @@ public class BotUtil {
             InlineKeyboardButton button = new InlineKeyboardButton();
             button.setCallbackData("C" + category.getAsr());
         }
-
         return new InlineKeyboardMarkup();
     }
 

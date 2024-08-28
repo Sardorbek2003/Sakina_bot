@@ -6,7 +6,7 @@ import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageRe
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import uz.pdp.model.QuranIndexRoot;
-import uz.pdp.model.SuraIndex;
+import uz.pdp.model.SurahIndex;
 import uz.pdp.service.util.JsonUtil;
 
 import java.util.ArrayList;
@@ -18,8 +18,8 @@ public class QuroniKarimdanBaziSuralar {
         sendMessagec.setChatId(chatId);
         sendMessagec.setText("surah");
         int n = 0;
-        List<SuraIndex> suraIndices = JsonUtil.readGson("BotService/src/test/file/suraIndex.json", new TypeReference<List<SuraIndex>>() {});
-        for (SuraIndex index : suraIndices) {
+        List<SurahIndex> suraIndices = JsonUtil.readGson("BotService/src/test/file/suraIndex.json", new TypeReference<List<SurahIndex>>() {});
+        for (SurahIndex index : suraIndices) {
             if (index.getChatId() == chatId) {
                 n = index.getId();
             }
@@ -34,9 +34,9 @@ public class QuroniKarimdanBaziSuralar {
         editMessage.setChatId(chatId);
         editMessage.setMessageId(messageId);
         int n = 0;
-        List<SuraIndex> suraIndices = JsonUtil.readGson("BotService/src/test/file/suraIndex.json", new TypeReference<List<SuraIndex>>() {
+        List<SurahIndex> suraIndices = JsonUtil.readGson("BotService/src/test/file/suraIndex.json", new TypeReference<List<SurahIndex>>() {
         });
-        for (SuraIndex index : suraIndices) {
+        for (SurahIndex index : suraIndices) {
             if (index.getChatId() == chatId) {
                 n = index.getId();
             }

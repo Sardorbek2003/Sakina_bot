@@ -22,7 +22,6 @@ import java.util.regex.Pattern;
 public class PrayerTimeInlineService {
     private static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private static final String PATH = "file/namoz_vaqtlari.json";
-
     public static Root getTodayTimes() {
         Date date = new Date();
         String str = simpleDateFormat.format(date);
@@ -32,7 +31,6 @@ public class PrayerTimeInlineService {
         return rootList(day, month);
 
     }
-
     private static Root rootList(String day, String month) {
         List<Root> roots = JsonUtil.readGson(PATH, new TypeReference<List<Root>>() {});
         Root todayRoot = new Root();
@@ -43,8 +41,6 @@ public class PrayerTimeInlineService {
         }
         return todayRoot;
     }
-
-
     public static SendMessage sendPrayerTimesKeyboard(long chatId) {
         MonthlyPrayerTimesUtil.write();
         Root root = getTodayTimes();
@@ -55,8 +51,8 @@ public class PrayerTimeInlineService {
         InlineKeyboardButton backButton2 = new InlineKeyboardButton();
         backButton.setText("◀\uFE0F ");
         backButton1.setText(" ▶\uFE0F ");
-        backButton.setCallbackData("back");
-        backButton1.setCallbackData("next");
+        backButton.setCallbackData("backk");
+        backButton1.setCallbackData("nextt");
         String monthName = new DateFormatSymbols().getMonths()[root.getMonth() - 1];
         backButton2.setText(root.getDay() + " - " + monthName);
         backButton2.setCallbackData("date");
@@ -95,8 +91,6 @@ public class PrayerTimeInlineService {
         row6.add(backButton);
         row6.add(backButton2);
         row6.add(backButton1);
-
-
         List<List<InlineKeyboardButton>> rows = new ArrayList<>();
         rows.add(row1);
         rows.add(row2);
@@ -104,7 +98,6 @@ public class PrayerTimeInlineService {
         rows.add(row4);
         rows.add(row5);
         rows.add(row6);
-
         inlineKeyboardMarkup.setKeyboard(rows);
         SendMessage message = new SendMessage();
         message.setChatId(chatId);

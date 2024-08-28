@@ -5,12 +5,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageReplyMarkup;
-import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
-import org.telegram.telegrambots.meta.api.objects.Location;
-import org.telegram.telegrambots.meta.api.objects.Message;
-import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.*;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-import uz.pdp.model.SuraIndex;
+import uz.pdp.model.SurahIndex;
 import uz.pdp.service.*;
 import uz.pdp.service.util.JsonUtil;
 
@@ -20,7 +17,6 @@ import java.util.List;
 import static uz.pdp.BotConstants.START;
 
 public class SakinaBot extends TelegramLongPollingBot {
-
     @Override
     public void onUpdateReceived(Update update) {
         if (update.hasMessage()) {
@@ -29,7 +25,6 @@ public class SakinaBot extends TelegramLongPollingBot {
                 String text = message.getText();
                 long chatId = message.getChatId();
                 System.out.println(chatId);
-
                 if (StringUtils.equals(text, START) || text.startsWith("Back")) {
                     System.out.println(message.getChatId());
                     SendMessage sendMessage = MenuService.showMenyu(chatId);
@@ -59,10 +54,15 @@ public class SakinaBot extends TelegramLongPollingBot {
                     SendMessage sendMessage = MosqueService.requestUserLocation(chatId);
                     sendMessage.setText("Yaqin masjidlar");
                     execute_(sendMessage);
+                } else if (text.equals("Tasbex\uD83D\uDCFF")) {
+                    SendMessage sendMessage = Tasbex.getTasbex(chatId,"0");
+                    sendMessage.setChatId(chatId);
+                    sendMessage.setText("Tasbex 0/33");
+                    execute_(sendMessage);
                 } else if (text.equals("Quroni Karimdan Bazi Suralar\uD83D\uDCD6")) {
-                    List<SuraIndex> suraIndices = JsonUtil.readGson("BotService/src/test/file/suraIndex.json", new TypeReference<List<SuraIndex>>() {
+                    List<SurahIndex> suraIndices = JsonUtil.readGson("BotService/src/test/file/suraIndex.json", new TypeReference<List<SurahIndex>>() {
                     });
-                    for (SuraIndex index : suraIndices) {
+                    for (SurahIndex index : suraIndices) {
                         if (index.getChatId() == chatId) {
                             index.setId(10);
                         }
@@ -94,7 +94,7 @@ public class SakinaBot extends TelegramLongPollingBot {
             }
             if (data.equals("next")) {
                 next(chatId);
-                EditMessageReplyMarkup surah = QuroniKarimdanBaziSuralar.getSurah(chatId,inlineMessageId);
+                EditMessageReplyMarkup surah = QuroniKarimdanBaziSuralar.getSurah(chatId, inlineMessageId);
                 execute_update(surah);
             }
             if (data.equals("back")) {
@@ -102,12 +102,11 @@ public class SakinaBot extends TelegramLongPollingBot {
                 EditMessageReplyMarkup surah = QuroniKarimdanBaziSuralar.getSurah(chatId, inlineMessageId);
                 execute_update(surah);
             }
-            if(data.startsWith("suralar")){
-                SendMessage sendMessage = GetSurahUrl.QuranMenyu(chatId,data);
+            if (data.startsWith("suralar")) {
+                SendMessage sendMessage = GetSurahUrl.QuranMenyu(chatId, data);
                 execute_(sendMessage);
             }
             if (data.startsWith("lsuralar")) {
-
                 SendMessage sendMessage = new SendMessage();
                 String surah = GetSurahUrl.getLotinSurah(data);
                 sendMessage.setChatId(chatId);
@@ -115,7 +114,6 @@ public class SakinaBot extends TelegramLongPollingBot {
                 execute_(sendMessage);
             }
             if (data.startsWith("asuralar")) {
-
                 SendMessage sendMessage = new SendMessage();
                 String surah = GetSurahUrl.getAraSurah(data);
                 sendMessage.setChatId(chatId);
@@ -130,9 +128,12 @@ public class SakinaBot extends TelegramLongPollingBot {
                 sendMessage.setChatId(update.getCallbackQuery().getMessage().getChatId());
                 execute_(sendMessage);
             }
+           if (data.equals("tasbex")){
+               EditMessageReplyMarkup markup = Tasbex.getUpdateTasbex(chatId,inlineMessageId);
+               execute_update(markup);
+           }
         }
     }
-
     @Override
     public String getBotUsername() {
         return "library_0304_bot";
@@ -150,7 +151,6 @@ public class SakinaBot extends TelegramLongPollingBot {
             e.printStackTrace();
         }
     }
-
     private void execute_update(EditMessageReplyMarkup t) {
         try {
             execute(t);
@@ -158,7 +158,6 @@ public class SakinaBot extends TelegramLongPollingBot {
             e.printStackTrace();
         }
     }
-
     public void sendTextMessage(long chatId, String text) {
         SendMessage message = new SendMessage();
         message.setChatId(chatId);
@@ -169,11 +168,10 @@ public class SakinaBot extends TelegramLongPollingBot {
             e.printStackTrace();
         }
     }
-
     private void next(long chatId) {
-        List<SuraIndex> suraIndices = JsonUtil.readGson("BotService/src/test/file/suraIndex.json", new TypeReference<List<SuraIndex>>() {
+        List<SurahIndex> suraIndices = JsonUtil.readGson("BotService/src/test/file/suraIndex.json", new TypeReference<List<SurahIndex>>() {
         });
-        for (SuraIndex index : suraIndices) {
+        for (SurahIndex index : suraIndices) {
             if (index.getChatId() == chatId) {
                 if (114 >= index.getId()) {
                     index.setId(index.getId() + 10);
@@ -182,11 +180,10 @@ public class SakinaBot extends TelegramLongPollingBot {
         }
         JsonUtil.writeGson(suraIndices, "BotService/src/test/file/suraIndex.json");
     }
-
     private void back(long chatId) {
-        List<SuraIndex> suraIndices = JsonUtil.readGson("BotService/src/test/file/suraIndex.json", new TypeReference<List<SuraIndex>>() {
+        List<SurahIndex> suraIndices = JsonUtil.readGson("BotService/src/test/file/suraIndex.json", new TypeReference<List<SurahIndex>>() {
         });
-        for (SuraIndex index : suraIndices) {
+        for (SurahIndex index : suraIndices) {
             if (index.getChatId() == chatId) {
                 if (10 <= index.getId()) {
                     index.setId(index.getId() - 10);

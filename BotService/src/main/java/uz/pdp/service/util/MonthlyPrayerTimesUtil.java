@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
-
 public class MonthlyPrayerTimesUtil {
     public static void write() {
         File file = new File("file/namoz_vaqtlari.json");
@@ -25,7 +24,6 @@ public class MonthlyPrayerTimesUtil {
             throw new RuntimeException(e);
         }
         ObjectMapper objectMapper = new ObjectMapper();
-
         try {
             List<Root> roots = objectMapper.readValue(url, new TypeReference<List<Root>>() {
             });

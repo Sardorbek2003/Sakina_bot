@@ -10,7 +10,6 @@ import java.util.List;
 
 public class JsonUtil {
     private static final ObjectMapper objectMapper = new ObjectMapper();
-
     public static <T> void writeGson(T t, String path) {
         objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
         try {
@@ -19,7 +18,6 @@ public class JsonUtil {
             e.printStackTrace();
         }
     }
-
     public static <T> List<T> readGson(String path, TypeReference<List<T>> typeReference) {
         try {
             return objectMapper.readValue(new File(path), typeReference);

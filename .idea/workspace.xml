@@ -4,22 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="534b0794-8f85-43fb-adfe-5d3f1591786e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/model/QuranIndexRoot.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/model/QuranKarimRoot.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/model/SuraIndex.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/model/Verse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/service/GetSurahUrl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/service/QuroniKarimdanBaziSuralar.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BotService/src/test/file/quranSuralariIndex.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BotService/src/test/file/suraIndex.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BotService/src/test/file/surah.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/file/quranSuralariIndex.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/file/suraIndex.json" afterDir="false" />
+    <list default="true" id="534b0794-8f85-43fb-adfe-5d3f1591786e" name="Changes" comment="Qurandan bazi suralar ok">
+      <change afterPath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/service/Tasbex.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/BotConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/BotConstants.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/SakinaBot.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/SakinaBot.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/model/HijriDate.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/model/SuraIndex.java" beforeDir="false" afterPath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/model/SurahIndex.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/service/NearestPrayerTimeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/service/NearestPrayerTimeService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/service/PrayerTimeInlineService.java" beforeDir="false" afterPath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/service/PrayerTimeInlineService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/service/QuroniKarimdanBaziSuralar.java" beforeDir="false" afterPath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/service/QuroniKarimdanBaziSuralar.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/service/util/BotUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/service/util/BotUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/service/util/JsonUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/service/util/JsonUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/service/util/KeyboardUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/service/util/MonthlyPrayerTimesUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/service/util/MonthlyPrayerTimesUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BotService/src/test/file/suraIndex.json" beforeDir="false" afterPath="$PROJECT_DIR$/BotService/src/test/file/suraIndex.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,9 +114,22 @@
       <workItem from="1724645580452" duration="6977000" />
       <workItem from="1724654763662" duration="5490000" />
     </task>
+    <task id="LOCAL-00001" summary="Qurandan bazi suralar ok">
+      <option name="closed" value="true" />
+      <created>1724817216369</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1724817216369</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Qurandan bazi suralar ok" />
+    <option name="LAST_COMMIT_MESSAGE" value="Qurandan bazi suralar ok" />
   </component>
 </project>
