@@ -1,8 +1,8 @@
-package uz.pdp.service.util;
+package uz.pdp.servicex;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import uz.pdp.model.Root;
+import uz.pdp.model.PrayerTime;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,7 +25,7 @@ public class MonthlyPrayerTimesUtil {
         }
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            List<Root> roots = objectMapper.readValue(url, new TypeReference<List<Root>>() {
+            List<PrayerTime> roots = objectMapper.readValue(url, new TypeReference<List<PrayerTime>>() {
             });
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(file, roots);
 

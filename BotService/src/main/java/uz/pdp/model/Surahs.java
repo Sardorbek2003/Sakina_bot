@@ -9,11 +9,11 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class QuranIndexRoot {
-    public int id;
-    public String name;
-    public String transliteration;
-    public String type;
-    public int total_verses;
-    public String link;
+public class Surahs {
+    private int id;
+    private String name;
+    private String transliteration;
+    private String type;
+    private int total_verses;
+    private String link;
 }

@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class SurahIndex {
+public class SurahDigitState {
     private int id;
     private long chatId;
 }

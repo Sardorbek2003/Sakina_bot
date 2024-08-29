@@ -1,18 +1,17 @@
 package uz.pdp;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import org.apache.commons.lang3.StringUtils;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageReplyMarkup;
 import org.telegram.telegrambots.meta.api.objects.*;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-import uz.pdp.model.SurahIndex;
+import uz.pdp.menyu.MenuService;
 import uz.pdp.service.*;
-import uz.pdp.service.util.JsonUtil;
+import uz.pdp.servicex.*;
+import uz.pdp.util.ObjectUtil;
 
 import java.util.Date;
-import java.util.List;
 
 import static uz.pdp.BotConstants.START;
 
@@ -26,11 +25,10 @@ public class SakinaBot extends TelegramLongPollingBot {
                 long chatId = message.getChatId();
                 System.out.println(chatId);
                 if (StringUtils.equals(text, START) || text.startsWith("Back")) {
-                    System.out.println(message.getChatId());
                     SendMessage sendMessage = MenuService.showMenyu(chatId);
                     execute_(sendMessage);
                 } else if (StringUtils.startsWith(text, "Islomiy Kitoblar")) {
-                    SendMessage sendMessage = BookService.bookMenyu(chatId);
+                    SendMessage sendMessage = BookBotService.bookMenyu(chatId);
                     sendMessage.setText("Islomiy Kitoblar");
                     execute_(sendMessage);
                 } else if (message.getText().equals("Namoz vaqtlari\uD83D\uDD52")) {
@@ -60,16 +58,12 @@ public class SakinaBot extends TelegramLongPollingBot {
                     sendMessage.setText("Tasbex 0/33");
                     execute_(sendMessage);
                 } else if (text.equals("Quroni Karimdan Bazi Suralar\uD83D\uDCD6")) {
-                    List<SurahIndex> suraIndices = JsonUtil.readGson("BotService/src/test/file/suraIndex.json", new TypeReference<List<SurahIndex>>() {
-                    });
-                    for (SurahIndex index : suraIndices) {
-                        if (index.getChatId() == chatId) {
-                            index.setId(10);
-                        }
-                    }
-                    JsonUtil.writeGson(suraIndices, "BotService/src/test/file/suraIndex.json");
-                    SendMessage surah = QuroniKarimdanBaziSuralar.getSurah(message.getChatId());
-                    execute_(surah);
+                  ObjectUtil.koranService.newMenyu(chatId,0);
+                  SendMessage sendMessage = ObjectUtil.koranBotService.getSurah(chatId);
+                  sendMessage.setChatId(chatId);
+                  sendMessage.setText("Surahs");
+                    System.out.println(sendMessage);
+                  execute_(sendMessage);
                 }
             } else if (message != null && message.hasLocation()) {
                 Location userLocation = message.getLocation();
@@ -85,7 +79,6 @@ public class SakinaBot extends TelegramLongPollingBot {
             String data = callbackQuery.getData();
             long chatId = callbackQuery.getMessage().getChatId();
             Integer inlineMessageId = callbackQuery.getMessage().getMessageId();
-
             if (data.equals("someCallbackData")) {
                 SendMessage sendMessage = new SendMessage();
                 sendMessage.setChatId(chatId);
@@ -93,16 +86,16 @@ public class SakinaBot extends TelegramLongPollingBot {
                 execute_(sendMessage);
             }
             if (data.equals("next")) {
-                next(chatId);
-                EditMessageReplyMarkup surah = QuroniKarimdanBaziSuralar.getSurah(chatId, inlineMessageId);
+                ObjectUtil.koranService.newMenyu(chatId,10);
+                EditMessageReplyMarkup surah = ObjectUtil.koranBotService.getSurah(chatId, inlineMessageId);
                 execute_update(surah);
             }
             if (data.equals("back")) {
-                back(chatId);
-                EditMessageReplyMarkup surah = QuroniKarimdanBaziSuralar.getSurah(chatId, inlineMessageId);
+               ObjectUtil.koranService.newMenyu(chatId,-10);
+                EditMessageReplyMarkup surah = ObjectUtil.koranBotService.getSurah(chatId, inlineMessageId);
                 execute_update(surah);
             }
-            if (data.startsWith("suralar")) {
+            if (data.startsWith("surahs")) {
                 SendMessage sendMessage = GetSurahUrl.QuranMenyu(chatId, data);
                 execute_(sendMessage);
             }
@@ -167,29 +160,5 @@ public class SakinaBot extends TelegramLongPollingBot {
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
-    }
-    private void next(long chatId) {
-        List<SurahIndex> suraIndices = JsonUtil.readGson("BotService/src/test/file/suraIndex.json", new TypeReference<List<SurahIndex>>() {
-        });
-        for (SurahIndex index : suraIndices) {
-            if (index.getChatId() == chatId) {
-                if (114 >= index.getId()) {
-                    index.setId(index.getId() + 10);
-                }
-            }
-        }
-        JsonUtil.writeGson(suraIndices, "BotService/src/test/file/suraIndex.json");
-    }
-    private void back(long chatId) {
-        List<SurahIndex> suraIndices = JsonUtil.readGson("BotService/src/test/file/suraIndex.json", new TypeReference<List<SurahIndex>>() {
-        });
-        for (SurahIndex index : suraIndices) {
-            if (index.getChatId() == chatId) {
-                if (10 <= index.getId()) {
-                    index.setId(index.getId() - 10);
-                }
-            }
-        }
-        JsonUtil.writeGson(suraIndices, "BotService/src/test/file/suraIndex.json");
     }
 }

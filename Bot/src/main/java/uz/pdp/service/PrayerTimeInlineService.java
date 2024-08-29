@@ -1,28 +1,23 @@
 package uz.pdp.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
-import uz.pdp.model.Root;
-import uz.pdp.service.util.JsonUtil;
-import uz.pdp.service.util.MonthlyPrayerTimesUtil;
+import uz.pdp.model.PrayerTime;
+import uz.pdp.util.JsonUtil;
+import uz.pdp.servicex.MonthlyPrayerTimesUtil;
 
-import java.io.File;
-import java.io.IOException;
 import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class PrayerTimeInlineService {
     private static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private static final String PATH = "file/namoz_vaqtlari.json";
-    public static Root getTodayTimes() {
+    public static PrayerTime getTodayTimes() {
         Date date = new Date();
         String str = simpleDateFormat.format(date);
         String[] split = str.split("-");
@@ -31,10 +26,10 @@ public class PrayerTimeInlineService {
         return rootList(day, month);
 
     }
-    private static Root rootList(String day, String month) {
-        List<Root> roots = JsonUtil.readGson(PATH, new TypeReference<List<Root>>() {});
-        Root todayRoot = new Root();
-        for (Root root : roots) {
+    private static PrayerTime rootList(String day, String month) {
+        List<PrayerTime> roots = JsonUtil.readGson(PATH, new TypeReference<List<PrayerTime>>() {});
+        PrayerTime todayRoot = new PrayerTime();
+        for (PrayerTime root : roots) {
             if (root.getDay() == Integer.parseInt(day) && root.getMonth() == Integer.parseInt(month)) {
                 todayRoot = root;
             }
@@ -43,7 +38,7 @@ public class PrayerTimeInlineService {
     }
     public static SendMessage sendPrayerTimesKeyboard(long chatId) {
         MonthlyPrayerTimesUtil.write();
-        Root root = getTodayTimes();
+        PrayerTime root = getTodayTimes();
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
 
         InlineKeyboardButton backButton = new InlineKeyboardButton();

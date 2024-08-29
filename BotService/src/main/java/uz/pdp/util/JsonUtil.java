@@ -1,16 +1,15 @@
-package uz.pdp.service.util;
+package uz.pdp.util;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import uz.pdp.model.Root;
 
 import java.io.File;
 import java.util.List;
 
 public class JsonUtil {
     private static final ObjectMapper objectMapper = new ObjectMapper();
-    public static <T> void writeGson(T t, String path) {
+    public static <T> void writeGson(String path, T t) {
         objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
         try {
             objectMapper.writeValue(new File(path), t);
