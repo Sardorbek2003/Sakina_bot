@@ -6,7 +6,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMa
 import uz.pdp.model.SurahDigitState;
 import uz.pdp.model.Surahs;
 import uz.pdp.util.BotUtil;
-import uz.pdp.util.ObjectUtil;
+import uz.pdp.utill.ObjectUtil;
 
 import java.util.ArrayList;
 import java.util.List;

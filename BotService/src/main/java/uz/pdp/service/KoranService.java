@@ -20,8 +20,7 @@ public class KoranService {
     }
 
     public List<Surahs> getSurahs() {
-        return JsonUtil.readGson(FilePath.PATH_SURAHS, new TypeReference<List<Surahs>>() {
-        });
+        return JsonUtil.readGson(FilePath.PATH_SURAHS, new TypeReference<List<Surahs>>() {});
     }
 
     public void setSurahs(List<Surahs> surahs) {

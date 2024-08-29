@@ -10,16 +10,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BookBotService {
-    public static SendMessage bookMenyu(Long chatId){
-        List<String> list = new ArrayList<>();
-        list.add("Audio Kitoblar\uD83C\uDFA7");
-        list.add("Kitoblar\uD83D\uDCAC");
-        list.add("Back⬅\uFE0F");
+    public static SendMessage bookMenyu(Long chatId) {
+
+        List<String> stringList = List.of("Audio Kitoblar\uD83C\uDFA7",
+                "Audio Kitoblar\uD83C\uDFA7", "Back⬅\uFE0F");
 
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(chatId);
-        ReplyKeyboardMarkup replyKeyboardMarkup = BotUtil.replyKeyboardMarkup(list,2);
+        ReplyKeyboardMarkup replyKeyboardMarkup = BotUtil.replyKeyboardMarkup(stringList, 2);
         sendMessage.setReplyMarkup(replyKeyboardMarkup);
+
         return sendMessage;
     }
 }

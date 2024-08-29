@@ -44,14 +44,70 @@ public class BotUtil {
                 .collect(Collectors.toList());
     }
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public static <T> InlineKeyboardMarkup inlineKeyboardMarkup(List<String> data, List<String> callBackQueryData, int n) {
+        if (data.isEmpty() || callBackQueryData.isEmpty()) {
+            return new InlineKeyboardMarkup();
+        }
+
+        List<List<InlineKeyboardButton>> keyboardRows = makeInlineKeyboardRows(data, callBackQueryData, n);
+        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+        inlineKeyboardMarkup.setKeyboard(keyboardRows);
+        return inlineKeyboardMarkup;
+    }
+
+    private static <T> List<List<InlineKeyboardButton>> makeInlineKeyboardRows(List<T> data, List<T> callBackQueryData, int n) {
+        List<List<InlineKeyboardButton>> collect = new ArrayList<>();
+        List<InlineKeyboardButton> buttons = new ArrayList<>();
+        for (int i = 0; i < data.size(); i++) {
+            InlineKeyboardButton inlineKeyboardButton = createInlineKeyboardButton(data.get(i), callBackQueryData.get(i));
+            buttons.add(inlineKeyboardButton);
+            if ((i + 1) % n == 0){
+                collect.add(buttons);
+                buttons = new ArrayList<>();
+            }
+        }
+
+        if (!buttons.isEmpty()){
+            collect.add(buttons);
+        }
+
+        return collect;
+    }
+
+    private static <T> InlineKeyboardButton createInlineKeyboardButton(T model, T model2) {
+        InlineKeyboardButton button = new InlineKeyboardButton();
+        String callbackData = "";
+
+        if (model.equals("Lotin alifbosida")) {
+            button.setText((String) model);
+            callbackData = (String) model2;
+        }
+        if (model.equals("باللغة العربية")) {
+            button.setText((String)model);
+            callbackData = (String)model2;
+        }
+        if (model.equals("NEXT")){
+            button.setText((String) model);
+            callbackData = (String) model2;
+        }
+        if (model.equals("BACK")){
+            button.setText((String) model);
+            callbackData = (String) model2;
+        }
+
+        button.setCallbackData(callbackData);
+        return button;
+    }
+
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public static <T> InlineKeyboardMarkup inlineKeyboardMarkup(List<T> models, int n) {
-        System.out.println("inline button");
         if (models.isEmpty()) {
             return new InlineKeyboardMarkup();
         }
 
         List<List<InlineKeyboardButton>> keyboardRows = makeInlineKeyboardRows(models, n);
-        keyboardRows.add(getNextPrev("sss"));
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
         inlineKeyboardMarkup.setKeyboard(keyboardRows);
         return inlineKeyboardMarkup;
@@ -102,19 +158,19 @@ public class BotUtil {
         return keyboardMarkup;
     }
 
-    private static List<InlineKeyboardButton> getNextPrev(String data) {
-        List<InlineKeyboardButton> buttons = new ArrayList<>();
-
-        InlineKeyboardButton inlineKeyboardButton = new InlineKeyboardButton();
-        inlineKeyboardButton.setText("NEXT");
-        inlineKeyboardButton.setCallbackData("next");
-
-        InlineKeyboardButton inlineKeyboardButton1 = new InlineKeyboardButton();
-        inlineKeyboardButton1.setText("BACK");
-        inlineKeyboardButton1.setCallbackData("back");
-
-        buttons.add(inlineKeyboardButton1);
-        buttons.add( inlineKeyboardButton);
-        return buttons;
-    }
+//    private static List<InlineKeyboardButton> getNextPrev(String data) {
+//        List<InlineKeyboardButton> buttons = new ArrayList<>();
+//
+//        InlineKeyboardButton inlineKeyboardButton = new InlineKeyboardButton();
+//        inlineKeyboardButton.setText("NEXT");
+//        inlineKeyboardButton.setCallbackData("next");
+//
+//        InlineKeyboardButton inlineKeyboardButton1 = new InlineKeyboardButton();
+//        inlineKeyboardButton1.setText("BACK");
+//        inlineKeyboardButton1.setCallbackData("back");
+//
+//        buttons.add(inlineKeyboardButton1);
+//        buttons.add( inlineKeyboardButton);
+//        return buttons;
+//    }
 }

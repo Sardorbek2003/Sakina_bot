@@ -5,6 +5,7 @@ import org.telegram.telegrambots.meta.api.objects.Location;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
+import uz.pdp.util.BotUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,31 +13,15 @@ import java.util.List;
 public class MosqueService {
 
     public static SendMessage requestUserLocation(long chatId) {
-        SendMessage message = new SendMessage();
-        message.setChatId(chatId);
-        message.setText("Please share your location to find the nearest mosque.");
+        SendMessage sendMessage = new SendMessage();
+        sendMessage.setChatId(chatId);
+        sendMessage.setText("Please share your location to find the nearest mosque.");
 
-        ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();
-        keyboardMarkup.setResizeKeyboard(true);
-        keyboardMarkup.setOneTimeKeyboard(true);
+        List<String> stringList = List.of("Share Location", "Back");
+        ReplyKeyboardMarkup replyKeyboardMarkup = BotUtil.replyKeyboardMarkup(stringList, 1);
+        sendMessage.setReplyMarkup(replyKeyboardMarkup);
 
-        KeyboardButton locationButton = new KeyboardButton();
-        locationButton.setText("Share Location");
-        locationButton.setRequestLocation(true);
-
-        KeyboardButton backButton = new KeyboardButton();
-        backButton.setText("Back");
-        KeyboardRow row = new KeyboardRow();
-        row.add(locationButton);
-        row.add(backButton);
-
-        List<KeyboardRow> keyboard = new ArrayList<>();
-        keyboard.add(row);
-
-        keyboardMarkup.setKeyboard(keyboard);
-        message.setReplyMarkup(keyboardMarkup);
-
-        return message;
+        return sendMessage;
     }
 
     public static String getMapLink(Location userLocation) {

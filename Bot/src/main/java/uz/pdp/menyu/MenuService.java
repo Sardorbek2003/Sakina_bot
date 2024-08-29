@@ -11,23 +11,18 @@ import java.util.List;
 
 public class MenuService {
     public static SendMessage showMenyu(Long chatId) {
-        List<String> list = new ArrayList<>();
-        list.add("Namoz Vaqtlari\uD83D\uDD58");
-        list.add("Eng Yaqin Namoz\uD83D\uDCAC");
-        list.add("Eng yaqin Masjidlar\uD83D\uDD4C");
-        list.add("Tasbex\uD83D\uDCFF");
-        list.add("Quroni Karimdan Bazi Suralar\uD83D\uDCD6");
-        list.add("Muhim Duolar\uD83E\uDD32");
-        list.add("Xijriy Yil Xisobi\uD83D\uDCC6");
-        list.add("Islomiy Kitoblar\uD83D\uDCDA");
+
+        List<String> stringList = List.of("Namoz Vaqtlari\uD83D\uDD58", "Eng Yaqin Namoz\uD83D\uDCAC", "Eng yaqin Masjidlar\uD83D\uDD4C",
+                "Tasbex\uD83D\uDCFF", "Quroni Karimdan Bazi Suralar\uD83D\uDCD6", "Muhim Duolar\uD83E\uDD32",
+                "Xijriy Yil Xisobi\uD83D\uDCC6", "Islomiy Kitoblar\uD83D\uDCDA");
+
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(chatId);
-        ReplyKeyboardMarkup replyKeyboardMarkup = BotUtil.replyKeyboardMarkup(list,3);
-        replyKeyboardMarkup.setResizeKeyboard(true);
         sendMessage.setText("Welcome Bot");
+        ReplyKeyboardMarkup replyKeyboardMarkup = BotUtil.replyKeyboardMarkup(stringList, 3);
+        replyKeyboardMarkup.setResizeKeyboard(true);
         sendMessage.setReplyMarkup(replyKeyboardMarkup);
 
         return sendMessage;
-
     }
 }
