@@ -8,14 +8,14 @@ import org.telegram.telegrambots.meta.api.objects.*;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import uz.pdp.menyu.MenuService;
 import uz.pdp.service.*;
-import uz.pdp.servicex.*;
-import uz.pdp.util.ObjectUtil;
+import uz.pdp.utill.ObjectUtil;
 
 import java.util.Date;
 
-import static uz.pdp.BotConstants.START;
+import static uz.pdp.BotConstants.*;
 
 public class SakinaBot extends TelegramLongPollingBot {
+
     @Override
     public void onUpdateReceived(Update update) {
         if (update.hasMessage()) {
@@ -24,44 +24,44 @@ public class SakinaBot extends TelegramLongPollingBot {
                 String text = message.getText();
                 long chatId = message.getChatId();
                 System.out.println(chatId);
-                if (StringUtils.equals(text, START) || text.startsWith("Back")) {
+                if (StringUtils.equals(text, START) || text.startsWith(BACK)) {
                     SendMessage sendMessage = MenuService.showMenyu(chatId);
                     execute_(sendMessage);
-                } else if (StringUtils.startsWith(text, "Islomiy Kitoblar")) {
+                } else if (StringUtils.startsWith(text, ISLOMIY_KITOB)) {
                     SendMessage sendMessage = BookBotService.bookMenyu(chatId);
                     sendMessage.setText("Islomiy Kitoblar");
                     execute_(sendMessage);
-                } else if (message.getText().equals("Namoz vaqtlari\uD83D\uDD52")) {
+                } else if (message.getText().equals(NAMOZ_VAQT_2)) {
                     SendMessage sendMessage = PrayerTimeInlineService.sendPrayerTimesKeyboard(chatId);
                     sendMessage.setText(new Date().toString());
                     execute_(sendMessage);
-                } else if (text.startsWith("Namoz Vaqtlari")) {
+                } else if (text.startsWith(NAMOZ_VAQT)) {
                     SendMessage sendMessage = PrayerTimeService.getNamozVatlari(chatId);
-                    sendMessage.setText("Namoz Vaqtlari");
+                    sendMessage.setText(NAMOZ_VAQT);
                     execute_(sendMessage);
-                } else if (text.startsWith("Eng Yaqin Namoz\uD83D\uDCAC")) {
+                } else if (text.startsWith(ENG_YAQIN_NAMOZ)) {
                     SendMessage sendMessage = NearestPrayerTimeService.getNextPrayer(chatId);
                     execute_(sendMessage);
-                } else if (text.equals("Xijriy Yil Xisobi\uD83D\uDCC6")) {
+                } else if (text.equals(HIJRIY_YIL_XISOB)) {
                     String hijriDate = HijriDateService.fetchHijriDate();
                     SendMessage sendMessage = new SendMessage();
                     sendMessage.setChatId(chatId);
                     sendMessage.setText(hijriDate);
                     execute_(sendMessage);
-                } else if (text.equals("Eng yaqin Masjidlar\uD83D\uDD4C")) {
+                } else if (text.equals(ENG_YAQIN_MASJID)) {
                     SendMessage sendMessage = MosqueService.requestUserLocation(chatId);
                     sendMessage.setText("Yaqin masjidlar");
                     execute_(sendMessage);
-                } else if (text.equals("Tasbex\uD83D\uDCFF")) {
+                } else if (text.equals(TASBEX)) {
                     SendMessage sendMessage = Tasbex.getTasbex(chatId,"0");
                     sendMessage.setChatId(chatId);
                     sendMessage.setText("Tasbex 0/33");
                     execute_(sendMessage);
-                } else if (text.equals("Quroni Karimdan Bazi Suralar\uD83D\uDCD6")) {
+                } else if (text.equals(QURONI_KARIMDAN_SURAH)) {
                   ObjectUtil.koranService.newMenyu(chatId,0);
                   SendMessage sendMessage = ObjectUtil.koranBotService.getSurah(chatId);
                   sendMessage.setChatId(chatId);
-                  sendMessage.setText("Surahs");
+                  sendMessage.setText(SURAH_STARTS);
                     System.out.println(sendMessage);
                   execute_(sendMessage);
                 }
@@ -96,7 +96,7 @@ public class SakinaBot extends TelegramLongPollingBot {
                 execute_update(surah);
             }
             if (data.startsWith("surahs")) {
-                SendMessage sendMessage = GetSurahUrl.QuranMenyu(chatId, data);
+                SendMessage sendMessage = GetSurahUrl.quranMenyu(chatId, data);
                 execute_(sendMessage);
             }
             if (data.startsWith("lsuralar")) {
@@ -129,12 +129,12 @@ public class SakinaBot extends TelegramLongPollingBot {
     }
     @Override
     public String getBotUsername() {
-        return "library_0304_bot";
+        return "https://t.me/nmadir1bot";
     }
 
     @Override
     public String getBotToken() {
-        return "7288467792:AAHKQse3hGoUFjZD2ehOTescDE_5rrlod-w";
+        return "7247776704:AAHVkJBT6xVG56HsJ8Hlo-MWy2NG1cLOJhc";
     }
 
     private void execute_(SendMessage t) {

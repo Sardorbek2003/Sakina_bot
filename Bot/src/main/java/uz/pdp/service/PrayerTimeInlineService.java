@@ -5,6 +5,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import uz.pdp.model.PrayerTime;
+import uz.pdp.util.FilePath;
 import uz.pdp.util.JsonUtil;
 import uz.pdp.servicex.MonthlyPrayerTimesUtil;
 
@@ -16,18 +17,17 @@ import java.util.List;
 
 public class PrayerTimeInlineService {
     private static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    private static final String PATH = "file/namoz_vaqtlari.json";
     public static PrayerTime getTodayTimes() {
         Date date = new Date();
         String str = simpleDateFormat.format(date);
         String[] split = str.split("-");
         String day = split[2];
         String month = split[1];
-        return rootList(day, month);
 
+        return rootList(day, month);
     }
     private static PrayerTime rootList(String day, String month) {
-        List<PrayerTime> roots = JsonUtil.readGson(PATH, new TypeReference<List<PrayerTime>>() {});
+        List<PrayerTime> roots = JsonUtil.readGson(FilePath.PATH_NAMOZ_VAQTLARI, new TypeReference<>() {});
         PrayerTime todayRoot = new PrayerTime();
         for (PrayerTime root : roots) {
             if (root.getDay() == Integer.parseInt(day) && root.getMonth() == Integer.parseInt(month)) {

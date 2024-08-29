@@ -5,43 +5,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="534b0794-8f85-43fb-adfe-5d3f1591786e" name="Changes" comment="Qurandan bazi suralar ok">
-      <change afterPath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/KoranBotService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/PrayerTimeService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/menyu/SurahMenyu.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/model/Koran.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/service/KoranService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/util/BotUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/util/FilePath.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/util/ObjectUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backent/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/BotConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/BotConstants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/SakinaBot.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/SakinaBot.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/model/QuranIndexRoot.java" beforeDir="false" afterPath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/model/Surahs.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/model/QuranKarimRoot.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/model/Root.java" beforeDir="false" afterPath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/model/PrayerTime.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/model/SurahIndex.java" beforeDir="false" afterPath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/model/SurahDigitState.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/model/Times.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/model/Verse.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/quran/QuranMenu.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/service/BookService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/BookBotService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/service/GetSurahUrl.java" beforeDir="false" afterPath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/servicex/GetSurahUrl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/service/HijriDateService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/HijriDateService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/service/MenuService.java" beforeDir="false" afterPath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/menyu/MenuService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/service/MosqueService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/MosqueService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/service/NearestPrayerTimeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/NearestPrayerTimeService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/service/PrayerTimeInlineService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/PrayerTimeInlineService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/service/PrayerTimeService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/service/QuroniKarimdanBaziSuralar.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/service/Tasbex.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/Tasbex.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/service/util/BotUtil.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/service/util/JsonUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/util/JsonUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/service/util/MonthlyPrayerTimesUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/servicex/MonthlyPrayerTimesUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BotService/src/test/file/quranSuralariIndex.json" beforeDir="false" afterPath="$PROJECT_DIR$/file/surahs.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BotService/src/test/file/suraIndex.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/BotService/src/test/file/surah.json" beforeDir="false" afterPath="$PROJECT_DIR$/file/koran.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/namoz_vaqtlari.json" beforeDir="false" afterPath="$PROJECT_DIR$/file/prayerTimes.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/quranSuralariIndex.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/suraIndex.json" beforeDir="false" afterPath="$PROJECT_DIR$/file/surahState.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/BookBotService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/BookBotService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/KoranBotService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/KoranBotService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/MosqueService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/MosqueService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/PrayerTimeInlineService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/PrayerTimeInlineService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/PrayerTimeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/PrayerTimeService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/Tasbex.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/Tasbex.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/menyu/MenuService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/menyu/MenuService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/menyu/SurahMenyu.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/menyu/SurahMenyu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/model/PrayerTime.java" beforeDir="false" afterPath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/model/PrayerTime.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/service/KoranService.java" beforeDir="false" afterPath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/service/KoranService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/servicex/GetSurahUrl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/GetSurahUrl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/servicex/MonthlyPrayerTimesUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/servicex/MonthlyPrayerTimesUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/util/BotUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/util/BotUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/util/FilePath.java" beforeDir="false" afterPath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/util/FilePath.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/util/ObjectUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/utill/ObjectUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/file/surahState.json" beforeDir="false" afterPath="$PROJECT_DIR$/file/surahState.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,6 +48,7 @@
   <component name="ProjectId" id="2l6NgJEVzaH8KWu4VTdzP1aQmmx" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
@@ -72,8 +57,10 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "master",
     "jdk.selected.JAVA_MODULE": "openjdk-21",
     "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/java-tutorial/Collection/Sakina_bot",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -88,17 +75,29 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/file" />
       <recent name="$PROJECT_DIR$/BotService/src/test/file" />
       <recent name="$PROJECT_DIR$/BotService/src/test" />
       <recent name="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/engYaqinNamoz" />
       <recent name="$PROJECT_DIR$/Bot/src/main/java/uz/pdp" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.Main (1)">
+    <configuration name="Main (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="uz.pdp.Main" />
+      <module name="BotServise" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="uz.pdp.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="uz.pdp.Main" />
-      <module name="Bot" />
+      <module name="Sakina_bot" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="uz.pdp.service.NearestPrayerTimeService" />
@@ -111,6 +110,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Main (1)" />
         <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
@@ -151,17 +151,6 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Qurandan bazi suralar ok" />

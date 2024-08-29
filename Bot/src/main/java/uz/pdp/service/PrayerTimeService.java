@@ -10,8 +10,8 @@ import java.util.List;
 public class PrayerTimeService {
     public static SendMessage getNamozVatlari(Long chatId) {
         List<String> list = new ArrayList<>();
-        list.add("Namoz vaqtlari\\uD83D\\uDD52");
-        list.add("Back⬅\\uFE0F");
+        list.add("Namoz vaqtlari");
+        list.add("Back");
 
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(chatId);

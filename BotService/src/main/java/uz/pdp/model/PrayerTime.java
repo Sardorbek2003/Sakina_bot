@@ -1,7 +1,6 @@
 package uz.pdp.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import javassist.runtime.Inner;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,7 +17,6 @@ public class PrayerTime {
     public Date date;
     public String weekday;
     public Times times;
-
 
     @Data
     @Getter

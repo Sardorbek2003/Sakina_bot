@@ -9,9 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Tasbex {
-    private static int n = 0;
-    public static SendMessage getTasbex(long chatId,String data){
-        n = 0;
+    private static int countTasbex = 0;
+
+    public static SendMessage getTasbex(long chatId, String data) {
+        countTasbex = 0;
         SendMessage sendMessage = new SendMessage();
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> list = new ArrayList<>();
@@ -29,10 +30,11 @@ public class Tasbex {
         sendMessage.setReplyMarkup(inlineKeyboardMarkup);
         return sendMessage;
     }
-    public static EditMessageReplyMarkup getUpdateTasbex(long chatId,Integer data){
-        n ++;
-        if (n == 33){
-            n = 0;
+
+    public static EditMessageReplyMarkup getUpdateTasbex(long chatId, Integer data) {
+        countTasbex++;
+        if (countTasbex == 33) {
+            countTasbex = 0;
         }
         EditMessageReplyMarkup editMessageReplyMarkup = new EditMessageReplyMarkup();
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
@@ -40,7 +42,7 @@ public class Tasbex {
         List<InlineKeyboardButton> buttons = new ArrayList<>();
         InlineKeyboardButton inlineKeyboardButton = new InlineKeyboardButton();
 
-        inlineKeyboardButton.setText(String.valueOf(n)+"\uD83D\uDCFF");
+        inlineKeyboardButton.setText(countTasbex + "\uD83D\uDCFF");
         inlineKeyboardButton.setCallbackData("tasbex");
         buttons.add(inlineKeyboardButton);
         list.add(buttons);
