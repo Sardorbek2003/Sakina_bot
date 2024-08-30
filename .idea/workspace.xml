@@ -5,21 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="534b0794-8f85-43fb-adfe-5d3f1591786e" name="Changes" comment="Qurandan bazi suralar ok">
-      <change afterPath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/ImamNamesService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/MenyuService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/bugungiNamozVaqtlari/HijriDate.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/namozVaqtlar/NamozVaqtlari.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/quran/QuranMenu.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/quran/QuranSuralar.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/util/KeyboardUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/BotConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/BotConstants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/SakinaBot.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/SakinaBot.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/menyu/MenuService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/menyu/MenuService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/menyu/SurahMenyu.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/BookBotService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/BookBotService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/GetSurahUrl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/GetSurahUrl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/HijriDateService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/HijriDateService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/KoranBotService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/KoranBotService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/MosqueService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/MosqueService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/NearestPrayerTimeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/NearestPrayerTimeService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/PrayerTimeInlineService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/PrayerTimeInlineService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/file/surahState.json" beforeDir="false" afterPath="$PROJECT_DIR$/file/surahState.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BotService/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/BotService/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/model/PrayerTime.java" beforeDir="false" afterPath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/model/Root.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/servicex/MonthlyPrayerTimesUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/servicex/MonthlyPrayerTimesUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,29 +42,32 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;Maven.Sakina_bot [clean].executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Asadulla&quot;,
-    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;openjdk-21&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/User/PdpJava/Project/3-Modul/telegramBot/Sakina_bot&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Main.executor": "Run",
+    "Maven.BotService [clean].executor": "Run",
+    "Maven.BotServise [clean].executor": "Run",
+    "Maven.Front [clean].executor": "Run",
+    "Maven.Sakina_bot [clean].executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "Merging Asadulla",
+    "jdk.selected.JAVA_MODULE": "openjdk-21",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/User/PdpJava/Project/3-Modul/telegramBot/Sakina_bot",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/BotService/src/test/file" />
@@ -104,13 +104,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1724496676516</updated>
-      <workItem from="1724523427551" duration="870000" />
-      <workItem from="1724571075912" duration="961000" />
-      <workItem from="1724572042384" duration="1000" />
-      <workItem from="1724572317541" duration="4000" />
-      <workItem from="1724573671715" duration="12456000" />
-      <workItem from="1724645580452" duration="6977000" />
-      <workItem from="1724654763662" duration="5490000" />
     </task>
     <task id="LOCAL-00001" summary="Qurandan bazi suralar ok">
       <option name="closed" value="true" />

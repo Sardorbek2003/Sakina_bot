@@ -43,6 +43,8 @@ public class PrayerTimeInlineService {
     public static SendMessage sendPrayerTimesKeyboard(long chatId) {
         MonthlyPrayerTimesUtil.write();
         PrayerTime root = getTodayTimes();
+        Root root = getTodayTimes();
+
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
 
         InlineKeyboardButton backButton = new InlineKeyboardButton();
@@ -72,9 +74,9 @@ public class PrayerTimeInlineService {
         shom.setText("Shom:  " + root.getTimes().getShom_iftor());
         shom.setCallbackData("shom");
 
-        InlineKeyboardButton xuftom = new InlineKeyboardButton();
-        xuftom.setText("Huftom:  " + root.getTimes().getHufton());
-        xuftom.setCallbackData("xuftom");
+        InlineKeyboardButton xufton = new InlineKeyboardButton();
+        xufton.setText("Huftom:  " + root.getTimes().getHufton());
+        xufton.setCallbackData("xuftom");
 
         List<InlineKeyboardButton> row1 = new ArrayList<>();
         row1.add(bomdod);
@@ -85,7 +87,7 @@ public class PrayerTimeInlineService {
         List<InlineKeyboardButton> row4 = new ArrayList<>();
         row4.add(shom);
         List<InlineKeyboardButton> row5 = new ArrayList<>();
-        row5.add(xuftom);
+        row5.add(xufton);
         List<InlineKeyboardButton> row6 = new ArrayList<>();
         row6.add(backButton);
         row6.add(backButton2);
@@ -101,7 +103,6 @@ public class PrayerTimeInlineService {
         SendMessage message = new SendMessage();
         message.setChatId(chatId);
         message.setReplyMarkup(inlineKeyboardMarkup);
-
         return message;
     }
 }
