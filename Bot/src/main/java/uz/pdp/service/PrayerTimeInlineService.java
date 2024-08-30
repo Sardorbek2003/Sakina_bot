@@ -17,6 +17,7 @@ import java.util.List;
 
 public class PrayerTimeInlineService {
     private static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
     public static PrayerTime getTodayTimes() {
         Date date = new Date();
         String str = simpleDateFormat.format(date);
@@ -26,8 +27,10 @@ public class PrayerTimeInlineService {
 
         return rootList(day, month);
     }
+
     private static PrayerTime rootList(String day, String month) {
-        List<PrayerTime> roots = JsonUtil.readGson(FilePath.PATH_NAMOZ_VAQTLARI, new TypeReference<>() {});
+        List<PrayerTime> roots = JsonUtil.readGson(FilePath.PATH_NAMOZ_VAQTLARI, new TypeReference<>() {
+        });
         PrayerTime todayRoot = new PrayerTime();
         for (PrayerTime root : roots) {
             if (root.getDay() == Integer.parseInt(day) && root.getMonth() == Integer.parseInt(month)) {
@@ -36,9 +39,12 @@ public class PrayerTimeInlineService {
         }
         return todayRoot;
     }
+
     public static SendMessage sendPrayerTimesKeyboard(long chatId) {
         MonthlyPrayerTimesUtil.write();
         PrayerTime root = getTodayTimes();
+        Root root = getTodayTimes();
+
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
 
         InlineKeyboardButton backButton = new InlineKeyboardButton();
@@ -68,9 +74,9 @@ public class PrayerTimeInlineService {
         shom.setText("Shom:  " + root.getTimes().getShom_iftor());
         shom.setCallbackData("shom");
 
-        InlineKeyboardButton xuftom = new InlineKeyboardButton();
-        xuftom.setText("Huftom:  " + root.getTimes().getHufton());
-        xuftom.setCallbackData("xuftom");
+        InlineKeyboardButton xufton = new InlineKeyboardButton();
+        xufton.setText("Huftom:  " + root.getTimes().getHufton());
+        xufton.setCallbackData("xuftom");
 
         List<InlineKeyboardButton> row1 = new ArrayList<>();
         row1.add(bomdod);
@@ -81,7 +87,7 @@ public class PrayerTimeInlineService {
         List<InlineKeyboardButton> row4 = new ArrayList<>();
         row4.add(shom);
         List<InlineKeyboardButton> row5 = new ArrayList<>();
-        row5.add(xuftom);
+        row5.add(xufton);
         List<InlineKeyboardButton> row6 = new ArrayList<>();
         row6.add(backButton);
         row6.add(backButton2);
@@ -97,7 +103,6 @@ public class PrayerTimeInlineService {
         SendMessage message = new SendMessage();
         message.setChatId(chatId);
         message.setReplyMarkup(inlineKeyboardMarkup);
-
         return message;
     }
 }

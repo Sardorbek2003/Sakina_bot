@@ -19,4 +19,7 @@ public interface BotConstants {
     String LSURALAR_STARTS = "lsuralar";
     String ASURALAR_STARTS = "asuralar";
     String TASBEX_CALLBACK = "tasbex";
+    String QURAN = "Quran☪️";
+    String QURAN_SURALARI = "Quron suralari\uD83E\uDEC0";
+
 }

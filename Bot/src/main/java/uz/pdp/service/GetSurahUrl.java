@@ -33,8 +33,7 @@ public class GetSurahUrl {
     }
 
     public static String getLotinSurah(String str) {
-        List<Koran> list = JsonUtil.readGson(FilePath.PATH_KORAN, new TypeReference<List<Koran>>() {
-        });
+        List<Koran> list = JsonUtil.readGson(FilePath.PATH_KORAN, new TypeReference<List<Koran>>() {});
         Koran quranKarimRoot = new Koran();
         for (Koran root : list) {
             if (str.endsWith(root.getTransliteration())) {

@@ -2,6 +2,7 @@ package uz.pdp;
 
 import org.apache.commons.lang3.StringUtils;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
+import org.telegram.telegrambots.meta.api.methods.send.SendAudio;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageReplyMarkup;
 import org.telegram.telegrambots.meta.api.objects.*;
@@ -35,36 +36,46 @@ public class SakinaBot extends TelegramLongPollingBot {
                     SendMessage sendMessage = PrayerTimeInlineService.sendPrayerTimesKeyboard(chatId);
                     sendMessage.setText(new Date().toString());
                     execute_(sendMessage);
-                } else if (text.startsWith(NAMOZ_VAQT)) {
+                } else if (message.getText().startsWith(NAMOZ_VAQT)) {
                     SendMessage sendMessage = PrayerTimeService.getNamozVatlari(chatId);
                     sendMessage.setText(NAMOZ_VAQT);
                     execute_(sendMessage);
-                } else if (text.startsWith(ENG_YAQIN_NAMOZ)) {
+                } else if (message.getText().startsWith(ENG_YAQIN_NAMOZ)) {
                     SendMessage sendMessage = NearestPrayerTimeService.getNextPrayer(chatId);
                     execute_(sendMessage);
-                } else if (text.equals(HIJRIY_YIL_XISOB)) {
+                } else if (message.getText().equals(HIJRIY_YIL_XISOB)) {
                     String hijriDate = HijriDateService.fetchHijriDate();
                     SendMessage sendMessage = new SendMessage();
                     sendMessage.setChatId(chatId);
                     sendMessage.setText(hijriDate);
                     execute_(sendMessage);
-                } else if (text.equals(ENG_YAQIN_MASJID)) {
+                } else if (message.getText().equals(ENG_YAQIN_MASJID)) {
                     SendMessage sendMessage = MosqueService.requestUserLocation(chatId);
                     sendMessage.setText("Yaqin masjidlar");
                     execute_(sendMessage);
-                } else if (text.equals(TASBEX)) {
-                    SendMessage sendMessage = Tasbex.getTasbex(chatId,"0");
+                } else if (message.getText().equals(TASBEX)) {
+                    SendMessage sendMessage = Tasbex.getTasbex(chatId, "0");
                     sendMessage.setChatId(chatId);
                     sendMessage.setText("Tasbex 0/33");
                     execute_(sendMessage);
-                } else if (text.equals(QURONI_KARIMDAN_SURAH)) {
-                  ObjectUtil.koranService.newMenyu(chatId,0);
-                  SendMessage sendMessage = ObjectUtil.koranBotService.getSurah(chatId);
-                  sendMessage.setChatId(chatId);
-                  sendMessage.setText(SURAH_STARTS);
-                    System.out.println(sendMessage);
-                  execute_(sendMessage);
+                } else if (message.getText().equals(QURONI_KARIMDAN_SURAH)) {
+                    ObjectUtil.koranService.newMenyu(chatId, 0);
+                    SendMessage sendMessage = ObjectUtil.koranBotService.getSurah(chatId);
+                    sendMessage.setChatId(chatId);
+                    sendMessage.setText(SURAH_STARTS);
+                    execute_(sendMessage);
+                } else if (text.equals(QURAN)) {
+                    SendMessage sendMessage = KoranBotService.surahList(chatId);
+                    sendMessage.setText("Suralar");
+                    execute_(sendMessage);
+                } else if (text.equals(QURAN_SURALARI)) {
+                    SendMessage sendMessage = ImamNamesService.imamMenu(chatId);
+                    sendMessage.setText("Imom menu");
+                    execute_(sendMessage);
+                } else if (ImamNamesService.IMAM_MENU.containsKey(text)) {
+                    sendMultipleAudios(chatId, text);
                 }
+
             } else if (message != null && message.hasLocation()) {
                 Location userLocation = message.getLocation();
                 long chatId = message.getChatId();
@@ -86,12 +97,12 @@ public class SakinaBot extends TelegramLongPollingBot {
                 execute_(sendMessage);
             }
             if (data.equals("next")) {
-                ObjectUtil.koranService.newMenyu(chatId,10);
+                ObjectUtil.koranService.newMenyu(chatId, 10);
                 EditMessageReplyMarkup surah = ObjectUtil.koranBotService.getSurah(chatId, inlineMessageId);
                 execute_update(surah);
             }
             if (data.equals("back")) {
-               ObjectUtil.koranService.newMenyu(chatId,-10);
+                ObjectUtil.koranService.newMenyu(chatId, -10);
                 EditMessageReplyMarkup surah = ObjectUtil.koranBotService.getSurah(chatId, inlineMessageId);
                 execute_update(surah);
             }
@@ -121,20 +132,21 @@ public class SakinaBot extends TelegramLongPollingBot {
                 sendMessage.setChatId(update.getCallbackQuery().getMessage().getChatId());
                 execute_(sendMessage);
             }
-           if (data.equals("tasbex")){
-               EditMessageReplyMarkup markup = Tasbex.getUpdateTasbex(chatId,inlineMessageId);
-               execute_update(markup);
-           }
+            if (data.equals("tasbex")) {
+                EditMessageReplyMarkup markup = Tasbex.getUpdateTasbex(chatId, inlineMessageId);
+                execute_update(markup);
+            }
         }
     }
+
     @Override
     public String getBotUsername() {
-        return "https://t.me/nmadir1bot";
+        return "@Uzbekmen_bot";
     }
 
     @Override
     public String getBotToken() {
-        return "7247776704:AAHVkJBT6xVG56HsJ8Hlo-MWy2NG1cLOJhc";
+        return "7385826567:AAFA8skdLgRWh3-bPGa7qPLh3NkVIMSWIc8";
     }
 
     private void execute_(SendMessage t) {
@@ -144,6 +156,7 @@ public class SakinaBot extends TelegramLongPollingBot {
             e.printStackTrace();
         }
     }
+
     private void execute_update(EditMessageReplyMarkup t) {
         try {
             execute(t);
@@ -151,6 +164,7 @@ public class SakinaBot extends TelegramLongPollingBot {
             e.printStackTrace();
         }
     }
+
     public void sendTextMessage(long chatId, String text) {
         SendMessage message = new SendMessage();
         message.setChatId(chatId);
@@ -160,5 +174,35 @@ public class SakinaBot extends TelegramLongPollingBot {
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
+    }
+
+    private void setSendAudio(SendAudio sendAudio) {
+        try {
+            execute(sendAudio);
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public SendAudio sendMultipleAudios(Long chatId, String imomName) {
+        SendAudio sendAudio = new SendAudio();
+        String pathName = ImamNamesService.IMAM_MENU.get(imomName);
+        System.out.println(pathName);
+        if (pathName == null) {
+            throw new RuntimeException("Imom topilmadi");
+        }
+
+        int n = 1;
+        for (int i = 1; i < 115; i++) {
+            String formatted = String.format("%03d", n);
+            String audioUrls = "https://server8.mp3quran.net/" + pathName + "/" + formatted + ".mp3";
+            sendAudio.setChatId(chatId);
+            System.out.println("Attempting to send audio from URL: " + audioUrls);
+            sendAudio.setAudio(new InputFile(audioUrls));
+            sendAudio.setCaption("Here is your audio file!");
+            setSendAudio(sendAudio);
+            n += 1;
+        }
+        return sendAudio;
     }
 }
