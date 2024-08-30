@@ -45,22 +45,21 @@ public class BotUtil {
     }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public static <T> InlineKeyboardMarkup inlineKeyboardMarkup(List<String> data, List<String> callBackQueryData, int n) {
-        if (data.isEmpty() || callBackQueryData.isEmpty()) {
+    public static <T> InlineKeyboardMarkup inlineKeyboardMarkup(List<String> data, List<String> callBack, int n) {
+        if (data.isEmpty() || callBack.isEmpty()) {
             return new InlineKeyboardMarkup();
         }
-
-        List<List<InlineKeyboardButton>> keyboardRows = makeInlineKeyboardRows(data, callBackQueryData, n);
+        List<List<InlineKeyboardButton>> keyboardRows = makeInlineKeyboardRows(data, callBack, n);
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
         inlineKeyboardMarkup.setKeyboard(keyboardRows);
         return inlineKeyboardMarkup;
     }
 
-    private static <T> List<List<InlineKeyboardButton>> makeInlineKeyboardRows(List<T> data, List<T> callBackQueryData, int n) {
+    private static <T> List<List<InlineKeyboardButton>> makeInlineKeyboardRows(List<T> data, List<T> callBack, int n) {
         List<List<InlineKeyboardButton>> collect = new ArrayList<>();
         List<InlineKeyboardButton> buttons = new ArrayList<>();
         for (int i = 0; i < data.size(); i++) {
-            InlineKeyboardButton inlineKeyboardButton = createInlineKeyboardButton(data.get(i), callBackQueryData.get(i));
+            InlineKeyboardButton inlineKeyboardButton = createInlineKeyboardButton(data.get(i), callBack.get(i));
             buttons.add(inlineKeyboardButton);
             if ((i + 1) % n == 0){
                 collect.add(buttons);
@@ -95,11 +94,50 @@ public class BotUtil {
             button.setText((String) model);
             callbackData = (String) model2;
         }
+        if (model.equals("◀\uFE0F ")){
+            button.setText((String) model);
+            callbackData = (String) model2;
+        }
+        if (model.equals(" ▶\uFE0F ")){
+            button.setText((String) model);
+            callbackData = (String) model2;
+        }
+        if (String.valueOf(model).startsWith("Bomdod")){
+            button.setText((String) model);
+            callbackData = (String) model2;
+        }
+        if (String.valueOf(model).startsWith("Peshin")){
+            button.setText((String) model);
+            callbackData = (String) model2;
+        }
+        if (String.valueOf(model).startsWith("Asr")){
+            button.setText((String) model);
+            callbackData = (String) model2;
+        }
+        if (String.valueOf(model).startsWith("Shom")){
+            button.setText((String) model);
+            callbackData = (String) model2;
+        }
+        if (String.valueOf(model).startsWith("Huftom")){
+            button.setText((String) model);
+            callbackData = (String) model2;
+        }
+        if (String.valueOf(model).matches("^\\d{1,2} - (January|February|March|April|May|June|July|August|September|October|November|December)$")){
+            button.setText((String) model);
+            callbackData = (String) model2;
+        }
+        if (String.valueOf(model).startsWith("Back")){
+            button.setText((String) model);
+            callbackData = (String) model2;
+        }
+        if (String.valueOf(model).startsWith("Next")){
+            button.setText((String) model);
+            callbackData = (String) model2;
+        }
 
         button.setCallbackData(callbackData);
         return button;
     }
-
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public static <T> InlineKeyboardMarkup inlineKeyboardMarkup(List<T> models, int n) {
@@ -139,38 +177,4 @@ public class BotUtil {
         button.setCallbackData(callbackData);
         return button;
     }
-
-    public static ReplyKeyboardMarkup getRequestPhoneNumberKeyboard() {
-        KeyboardButton button = new KeyboardButton("Share your phone number");
-        button.setRequestContact(true);
-
-        KeyboardRow row = new KeyboardRow();
-        row.add(button);
-
-        List<KeyboardRow> keyboardRows = new ArrayList<>();
-        keyboardRows.add(row);
-
-        ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();
-        keyboardMarkup.setKeyboard(keyboardRows);
-        keyboardMarkup.setResizeKeyboard(true);
-        keyboardMarkup.setOneTimeKeyboard(true);
-
-        return keyboardMarkup;
-    }
-
-//    private static List<InlineKeyboardButton> getNextPrev(String data) {
-//        List<InlineKeyboardButton> buttons = new ArrayList<>();
-//
-//        InlineKeyboardButton inlineKeyboardButton = new InlineKeyboardButton();
-//        inlineKeyboardButton.setText("NEXT");
-//        inlineKeyboardButton.setCallbackData("next");
-//
-//        InlineKeyboardButton inlineKeyboardButton1 = new InlineKeyboardButton();
-//        inlineKeyboardButton1.setText("BACK");
-//        inlineKeyboardButton1.setCallbackData("back");
-//
-//        buttons.add(inlineKeyboardButton1);
-//        buttons.add( inlineKeyboardButton);
-//        return buttons;
-//    }
 }

@@ -1,0 +1,670 @@
+Index: BotService/src/main/java/uz/pdp/util/FilePath.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package uz.pdp.util;\r\n\r\npublic class FilePath {\r\n    public static final String PATH_KORAN = \"file/koran.json\";\r\n    public static final String PATH_SURAHS = \"file/surahs.json\";\r\n    public static final String PATH_PRAYERTIMES = \"file/prayerTimes.json\";\r\n    public static final String PATH_SURAHSTATE = \"file/surahState.json\";\r\n    public static final String PATH_NAMOZ_VAQTLARI = \"file/namoz_vaqtlari.json\";\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/BotService/src/main/java/uz/pdp/util/FilePath.java b/BotService/src/main/java/uz/pdp/util/FilePath.java
+--- a/BotService/src/main/java/uz/pdp/util/FilePath.java	(revision 98f6ea6c8bcf5d21b7a5dadd8e40cfb95f0fa429)
++++ b/BotService/src/main/java/uz/pdp/util/FilePath.java	(date 1724936549887)
+@@ -3,8 +3,8 @@
+ public class FilePath {
+     public static final String PATH_KORAN = "file/koran.json";
+     public static final String PATH_SURAHS = "file/surahs.json";
+-    public static final String PATH_PRAYERTIMES = "file/prayerTimes.json";
+     public static final String PATH_SURAHSTATE = "file/surahState.json";
+     public static final String PATH_NAMOZ_VAQTLARI = "file/namoz_vaqtlari.json";
++    public static final String PATH_PRAYERTIMES = "file/prayerTimes.json";
+ 
+ }
+Index: BotService/src/main/java/uz/pdp/servicex/MonthlyPrayerTimesUtil.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package uz.pdp.servicex;\r\n\r\nimport com.fasterxml.jackson.core.type.TypeReference;\r\nimport com.fasterxml.jackson.databind.ObjectMapper;\r\nimport uz.pdp.model.PrayerTime;\r\nimport uz.pdp.util.FilePath;\r\nimport uz.pdp.util.JsonUtil;\r\n\r\nimport java.io.File;\r\nimport java.io.IOException;\r\nimport java.net.MalformedURLException;\r\nimport java.net.URL;\r\nimport java.util.List;\r\n\r\npublic class MonthlyPrayerTimesUtil {\r\n\r\n    public static void write() {\r\n        File file = new File(FilePath.PATH_NAMOZ_VAQTLARI);\r\n        try {\r\n            file.createNewFile();\r\n        } catch (IOException e) {\r\n            throw new RuntimeException(e);\r\n        }\r\n        URL url = null;\r\n        try {\r\n            url = new URL(\"https://islomapi.uz/api/monthly?region=Toshkent&month=8\");\r\n        } catch (MalformedURLException e) {\r\n            throw new RuntimeException(e);\r\n        }\r\n        ObjectMapper objectMapper = new ObjectMapper();\r\n        try {\r\n            List<PrayerTime> roots = objectMapper.readValue(url, new TypeReference<>() {});\r\n            JsonUtil.writeGson(FilePath.PATH_NAMOZ_VAQTLARI, roots);\r\n        } catch (IOException e) {\r\n            e.printStackTrace();\r\n        }\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/BotService/src/main/java/uz/pdp/servicex/MonthlyPrayerTimesUtil.java b/BotService/src/main/java/uz/pdp/servicex/MonthlyPrayerTimesUtil.java
+--- a/BotService/src/main/java/uz/pdp/servicex/MonthlyPrayerTimesUtil.java	(revision 98f6ea6c8bcf5d21b7a5dadd8e40cfb95f0fa429)
++++ b/BotService/src/main/java/uz/pdp/servicex/MonthlyPrayerTimesUtil.java	(date 1724936013877)
+@@ -6,33 +6,31 @@
+ import uz.pdp.util.FilePath;
+ import uz.pdp.util.JsonUtil;
+ 
+-import java.io.File;
+ import java.io.IOException;
+ import java.net.MalformedURLException;
+ import java.net.URL;
+ import java.util.List;
+ 
+ public class MonthlyPrayerTimesUtil {
++    public static ObjectMapper objectMapper = new ObjectMapper();
+ 
+     public static void write() {
+-        File file = new File(FilePath.PATH_NAMOZ_VAQTLARI);
++        URL url = getUrl();
+         try {
+-            file.createNewFile();
++            List<PrayerTime> roots = objectMapper.readValue(url, new TypeReference<>() {});
++            JsonUtil.writeGson(FilePath.PATH_NAMOZ_VAQTLARI, roots);
+         } catch (IOException e) {
+-            throw new RuntimeException(e);
++            e.printStackTrace();
+         }
++    }
++
++    public static URL getUrl() {
+         URL url = null;
+         try {
+             url = new URL("https://islomapi.uz/api/monthly?region=Toshkent&month=8");
+         } catch (MalformedURLException e) {
+             throw new RuntimeException(e);
+         }
+-        ObjectMapper objectMapper = new ObjectMapper();
+-        try {
+-            List<PrayerTime> roots = objectMapper.readValue(url, new TypeReference<>() {});
+-            JsonUtil.writeGson(FilePath.PATH_NAMOZ_VAQTLARI, roots);
+-        } catch (IOException e) {
+-            e.printStackTrace();
+-        }
++        return url;
+     }
+ }
+Index: Bot/src/main/java/uz/pdp/service/GetSurahUrl.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Bot/src/main/java/uz/pdp/service/GetSurahUrl.java b/Bot/src/main/java/uz/pdp/service/SurahLanguageService.java
+rename from Bot/src/main/java/uz/pdp/service/GetSurahUrl.java
+rename to Bot/src/main/java/uz/pdp/service/SurahLanguageService.java
+--- a/Bot/src/main/java/uz/pdp/service/GetSurahUrl.java	(revision 98f6ea6c8bcf5d21b7a5dadd8e40cfb95f0fa429)
++++ b/Bot/src/main/java/uz/pdp/service/SurahLanguageService.java	(date 1724947464276)
+@@ -3,16 +3,14 @@
+ import com.fasterxml.jackson.core.type.TypeReference;
+ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+ import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
+-import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
+ import uz.pdp.model.Koran;
+ import uz.pdp.util.BotUtil;
+ import uz.pdp.util.FilePath;
+ import uz.pdp.util.JsonUtil;
+ 
+-import java.util.ArrayList;
+ import java.util.List;
+ 
+-public class GetSurahUrl {
++public class SurahLanguageService {
+     public static SendMessage quranMenyu(long chatId, String data) {
+ 
+         List<String> stringDate = List.of("Lotin alifbosida", "باللغة العربية","BACK" , "NEXT");
+@@ -25,16 +23,10 @@
+         sendMessage.setText("Tilni Tanlang");
+         sendMessage.setReplyMarkup(inlineKeyboardMarkup1);
+ 
+-        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+-        List<List<InlineKeyboardButton>> list = new ArrayList<>();
+-        List<InlineKeyboardButton> buttons = new ArrayList<>();
+-
+         return sendMessage;
+     }
+-
+     public static String getLotinSurah(String str) {
+-        List<Koran> list = JsonUtil.readGson(FilePath.PATH_KORAN, new TypeReference<List<Koran>>() {
+-        });
++        List<Koran> list = JsonUtil.readGson(FilePath.PATH_KORAN, new TypeReference<>() {});
+         Koran quranKarimRoot = new Koran();
+         for (Koran root : list) {
+             if (str.endsWith(root.getTransliteration())) {
+@@ -49,8 +41,7 @@
+     }
+ 
+     public static String getAraSurah(String str) {
+-        List<Koran> list = JsonUtil.readGson(FilePath.PATH_KORAN, new TypeReference<List<Koran>>() {
+-        });
++        List<Koran> list = JsonUtil.readGson(FilePath.PATH_KORAN, new TypeReference<>() {});
+         Koran quranKarimRoot = new Koran();
+         for (Koran root : list) {
+             if (str.endsWith(root.getTransliteration())) {
+Index: BotService/src/main/java/uz/pdp/service/KoranService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package uz.pdp.service;\r\n\r\nimport com.fasterxml.jackson.core.type.TypeReference;\r\nimport uz.pdp.model.SurahDigitState;\r\nimport uz.pdp.model.Surahs;\r\nimport uz.pdp.util.FilePath;\r\nimport uz.pdp.util.JsonUtil;\r\n\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\n\r\npublic class KoranService {\r\n    public List<Surahs> getStringList(List<Surahs> surahs, int n) {\r\n        List<Surahs> surahsList = new ArrayList<>();\r\n        for (int i = n; i < n + 10 && n <= 114; i++) {\r\n            Surahs surah = surahs.get(i);\r\n            surahsList.add(surah);\r\n        }\r\n        return surahsList;\r\n    }\r\n\r\n    public List<Surahs> getSurahs() {\r\n        return JsonUtil.readGson(FilePath.PATH_SURAHS, new TypeReference<List<Surahs>>() {});\r\n    }\r\n\r\n    public void setSurahs(List<Surahs> surahs) {\r\n        JsonUtil.writeGson(FilePath.PATH_SURAHS, surahs);\r\n    }\r\n\r\n    public List<SurahDigitState> getSurahsState() {\r\n        return JsonUtil.readGson(FilePath.PATH_SURAHSTATE, new TypeReference<List<SurahDigitState>>() {\r\n        });\r\n    }\r\n\r\n    public void setSurahsState(List<SurahDigitState> surahsState) {\r\n        JsonUtil.writeGson(FilePath.PATH_SURAHSTATE, surahsState);\r\n    }\r\n\r\n    public void newMenyu(long chatId, int n) {\r\n        int k = 0;\r\n        List<SurahDigitState> states = new ArrayList<>();\r\n        for (SurahDigitState state : states) {\r\n            if (state.getChatId() == chatId) {\r\n                k = 10;\r\n                if (n == 0) {\r\n                    state.setId(0);\r\n                } else if (n == 10 || n == -10) {\r\n                    state.setId(state.getId() + n);\r\n                }\r\n            }\r\n        }\r\n        if (k == 10) {\r\n            setSurahsState(states);\r\n        }else {\r\n            setSurahsState(List.of(new SurahDigitState(0,chatId)));\r\n        }\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/BotService/src/main/java/uz/pdp/service/KoranService.java b/BotService/src/main/java/uz/pdp/service/KoranService.java
+--- a/BotService/src/main/java/uz/pdp/service/KoranService.java	(revision 98f6ea6c8bcf5d21b7a5dadd8e40cfb95f0fa429)
++++ b/BotService/src/main/java/uz/pdp/service/KoranService.java	(date 1724935561477)
+@@ -10,9 +10,10 @@
+ import java.util.List;
+ 
+ public class KoranService {
++    private static final int SURAH = 114;
+     public List<Surahs> getStringList(List<Surahs> surahs, int n) {
+         List<Surahs> surahsList = new ArrayList<>();
+-        for (int i = n; i < n + 10 && n <= 114; i++) {
++        for (int i = n; i < n + 10 && n <= SURAH; i++) {
+             Surahs surah = surahs.get(i);
+             surahsList.add(surah);
+         }
+Index: Bot/src/main/java/uz/pdp/SakinaBot.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package uz.pdp;\r\n\r\nimport org.apache.commons.lang3.StringUtils;\r\nimport org.telegram.telegrambots.bots.TelegramLongPollingBot;\r\nimport org.telegram.telegrambots.meta.api.methods.send.SendMessage;\r\nimport org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageReplyMarkup;\r\nimport org.telegram.telegrambots.meta.api.objects.*;\r\nimport org.telegram.telegrambots.meta.exceptions.TelegramApiException;\r\nimport uz.pdp.menyu.MenuService;\r\nimport uz.pdp.service.*;\r\nimport uz.pdp.utill.ObjectUtil;\r\n\r\nimport java.util.Date;\r\n\r\nimport static uz.pdp.BotConstants.*;\r\n\r\npublic class SakinaBot extends TelegramLongPollingBot {\r\n\r\n    @Override\r\n    public void onUpdateReceived(Update update) {\r\n        if (update.hasMessage()) {\r\n            Message message = update.getMessage();\r\n            if (message != null && message.hasText()) {\r\n                String text = message.getText();\r\n                long chatId = message.getChatId();\r\n                System.out.println(chatId);\r\n                if (StringUtils.equals(text, START) || text.startsWith(BACK)) {\r\n                    SendMessage sendMessage = MenuService.showMenyu(chatId);\r\n                    execute_(sendMessage);\r\n                } else if (StringUtils.startsWith(text, ISLOMIY_KITOB)) {\r\n                    SendMessage sendMessage = BookBotService.bookMenyu(chatId);\r\n                    sendMessage.setText(\"Islomiy Kitoblar\");\r\n                    execute_(sendMessage);\r\n                } else if (message.getText().equals(NAMOZ_VAQT_2)) {\r\n                    SendMessage sendMessage = PrayerTimeInlineService.sendPrayerTimesKeyboard(chatId);\r\n                    sendMessage.setText(new Date().toString());\r\n                    execute_(sendMessage);\r\n                } else if (text.startsWith(NAMOZ_VAQT)) {\r\n                    SendMessage sendMessage = PrayerTimeService.getNamozVatlari(chatId);\r\n                    sendMessage.setText(NAMOZ_VAQT);\r\n                    execute_(sendMessage);\r\n                } else if (text.startsWith(ENG_YAQIN_NAMOZ)) {\r\n                    SendMessage sendMessage = NearestPrayerTimeService.getNextPrayer(chatId);\r\n                    execute_(sendMessage);\r\n                } else if (text.equals(HIJRIY_YIL_XISOB)) {\r\n                    String hijriDate = HijriDateService.fetchHijriDate();\r\n                    SendMessage sendMessage = new SendMessage();\r\n                    sendMessage.setChatId(chatId);\r\n                    sendMessage.setText(hijriDate);\r\n                    execute_(sendMessage);\r\n                } else if (text.equals(ENG_YAQIN_MASJID)) {\r\n                    SendMessage sendMessage = MosqueService.requestUserLocation(chatId);\r\n                    sendMessage.setText(\"Yaqin masjidlar\");\r\n                    execute_(sendMessage);\r\n                } else if (text.equals(TASBEX)) {\r\n                    SendMessage sendMessage = Tasbex.getTasbex(chatId,\"0\");\r\n                    sendMessage.setChatId(chatId);\r\n                    sendMessage.setText(\"Tasbex 0/33\");\r\n                    execute_(sendMessage);\r\n                } else if (text.equals(QURONI_KARIMDAN_SURAH)) {\r\n                  ObjectUtil.koranService.newMenyu(chatId,0);\r\n                  SendMessage sendMessage = ObjectUtil.koranBotService.getSurah(chatId);\r\n                  sendMessage.setChatId(chatId);\r\n                  sendMessage.setText(SURAH_STARTS);\r\n                    System.out.println(sendMessage);\r\n                  execute_(sendMessage);\r\n                }\r\n            } else if (message != null && message.hasLocation()) {\r\n                Location userLocation = message.getLocation();\r\n                long chatId = message.getChatId();\r\n                String mapLink = MosqueService.getMapLink(userLocation);\r\n                SendMessage sendMessage = new SendMessage();\r\n                sendMessage.setChatId(chatId);\r\n                sendMessage.setText(\"Here is a link to find the nearest mosques on Google Maps:\\n\" + mapLink);\r\n                execute_(sendMessage);\r\n            }\r\n        } else if (update.hasCallbackQuery()) {\r\n            CallbackQuery callbackQuery = update.getCallbackQuery();\r\n            String data = callbackQuery.getData();\r\n            long chatId = callbackQuery.getMessage().getChatId();\r\n            Integer inlineMessageId = callbackQuery.getMessage().getMessageId();\r\n            if (data.equals(\"someCallbackData\")) {\r\n                SendMessage sendMessage = new SendMessage();\r\n                sendMessage.setChatId(chatId);\r\n                sendMessage.setText(\"Callback query handled: \" + data);\r\n                execute_(sendMessage);\r\n            }\r\n            if (data.equals(\"next\")) {\r\n                ObjectUtil.koranService.newMenyu(chatId,10);\r\n                EditMessageReplyMarkup surah = ObjectUtil.koranBotService.getSurah(chatId, inlineMessageId);\r\n                execute_update(surah);\r\n            }\r\n            if (data.equals(\"back\")) {\r\n               ObjectUtil.koranService.newMenyu(chatId,-10);\r\n                EditMessageReplyMarkup surah = ObjectUtil.koranBotService.getSurah(chatId, inlineMessageId);\r\n                execute_update(surah);\r\n            }\r\n            if (data.startsWith(\"surahs\")) {\r\n                SendMessage sendMessage = GetSurahUrl.quranMenyu(chatId, data);\r\n                execute_(sendMessage);\r\n            }\r\n            if (data.startsWith(\"lsuralar\")) {\r\n                SendMessage sendMessage = new SendMessage();\r\n                String surah = GetSurahUrl.getLotinSurah(data);\r\n                sendMessage.setChatId(chatId);\r\n                sendMessage.setText(surah);\r\n                execute_(sendMessage);\r\n            }\r\n            if (data.startsWith(\"asuralar\")) {\r\n                SendMessage sendMessage = new SendMessage();\r\n                String surah = GetSurahUrl.getAraSurah(data);\r\n                sendMessage.setChatId(chatId);\r\n                sendMessage.setText(surah);\r\n                execute_(sendMessage);\r\n            }\r\n            if (data.equals(\"bomdod\")) {\r\n                SendMessage sendMessage = new SendMessage();\r\n                sendMessage.setText(\"1.Ният қилиш\\n\" +\r\n                        \"\\n\" +\r\n                        \"Намоз вақти киргач, таҳорат билан, пок кийим билан, покиза жойда туриб, қиблага юзланамиз ва ният қиламиз\\n\");\r\n                sendMessage.setChatId(update.getCallbackQuery().getMessage().getChatId());\r\n                execute_(sendMessage);\r\n            }\r\n           if (data.equals(\"tasbex\")){\r\n               EditMessageReplyMarkup markup = Tasbex.getUpdateTasbex(chatId,inlineMessageId);\r\n               execute_update(markup);\r\n           }\r\n        }\r\n    }\r\n    @Override\r\n    public String getBotUsername() {\r\n        return \"https://t.me/nmadir1bot\";\r\n    }\r\n\r\n    @Override\r\n    public String getBotToken() {\r\n        return \"7247776704:AAHVkJBT6xVG56HsJ8Hlo-MWy2NG1cLOJhc\";\r\n    }\r\n\r\n    private void execute_(SendMessage t) {\r\n        try {\r\n            execute(t);\r\n        } catch (TelegramApiException e) {\r\n            e.printStackTrace();\r\n        }\r\n    }\r\n    private void execute_update(EditMessageReplyMarkup t) {\r\n        try {\r\n            execute(t);\r\n        } catch (TelegramApiException e) {\r\n            e.printStackTrace();\r\n        }\r\n    }\r\n    public void sendTextMessage(long chatId, String text) {\r\n        SendMessage message = new SendMessage();\r\n        message.setChatId(chatId);\r\n        message.setText(text);\r\n        try {\r\n            execute(message);\r\n        } catch (TelegramApiException e) {\r\n            e.printStackTrace();\r\n        }\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Bot/src/main/java/uz/pdp/SakinaBot.java b/Bot/src/main/java/uz/pdp/SakinaBot.java
+--- a/Bot/src/main/java/uz/pdp/SakinaBot.java	(revision 98f6ea6c8bcf5d21b7a5dadd8e40cfb95f0fa429)
++++ b/Bot/src/main/java/uz/pdp/SakinaBot.java	(date 1724934917775)
+@@ -28,7 +28,7 @@
+                     SendMessage sendMessage = MenuService.showMenyu(chatId);
+                     execute_(sendMessage);
+                 } else if (StringUtils.startsWith(text, ISLOMIY_KITOB)) {
+-                    SendMessage sendMessage = BookBotService.bookMenyu(chatId);
++                    SendMessage sendMessage = BookService.bookMenyu(chatId);
+                     sendMessage.setText("Islomiy Kitoblar");
+                     execute_(sendMessage);
+                 } else if (message.getText().equals(NAMOZ_VAQT_2)) {
+@@ -96,19 +96,19 @@
+                 execute_update(surah);
+             }
+             if (data.startsWith("surahs")) {
+-                SendMessage sendMessage = GetSurahUrl.quranMenyu(chatId, data);
++                SendMessage sendMessage = SurahLanguageService.quranMenyu(chatId, data);
+                 execute_(sendMessage);
+             }
+             if (data.startsWith("lsuralar")) {
+                 SendMessage sendMessage = new SendMessage();
+-                String surah = GetSurahUrl.getLotinSurah(data);
++                String surah = SurahLanguageService.getLotinSurah(data);
+                 sendMessage.setChatId(chatId);
+                 sendMessage.setText(surah);
+                 execute_(sendMessage);
+             }
+             if (data.startsWith("asuralar")) {
+                 SendMessage sendMessage = new SendMessage();
+-                String surah = GetSurahUrl.getAraSurah(data);
++                String surah = SurahLanguageService.getAraSurah(data);
+                 sendMessage.setChatId(chatId);
+                 sendMessage.setText(surah);
+                 execute_(sendMessage);
+Index: Bot/src/main/java/uz/pdp/service/BookBotService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Bot/src/main/java/uz/pdp/service/BookBotService.java b/Bot/src/main/java/uz/pdp/service/BookService.java
+rename from Bot/src/main/java/uz/pdp/service/BookBotService.java
+rename to Bot/src/main/java/uz/pdp/service/BookService.java
+--- a/Bot/src/main/java/uz/pdp/service/BookBotService.java	(revision 98f6ea6c8bcf5d21b7a5dadd8e40cfb95f0fa429)
++++ b/Bot/src/main/java/uz/pdp/service/BookService.java	(date 1724934917729)
+@@ -2,14 +2,11 @@
+ 
+ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+ import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
+-import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
+-import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
+ import uz.pdp.util.BotUtil;
+ 
+-import java.util.ArrayList;
+ import java.util.List;
+ 
+-public class BookBotService {
++public class BookService {
+     public static SendMessage bookMenyu(Long chatId) {
+ 
+         List<String> stringList = List.of("Audio Kitoblar\uD83C\uDFA7",
+Index: file/surahState.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>[ {\r\n  \"id\" : 0,\r\n  \"chatId\" : 1873855964\r\n} ]
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/file/surahState.json b/file/surahState.json
+--- a/file/surahState.json	(revision 98f6ea6c8bcf5d21b7a5dadd8e40cfb95f0fa429)
++++ b/file/surahState.json	(date 1724935651911)
+@@ -1,4 +1,1 @@
+-[ {
+-  "id" : 0,
+-  "chatId" : 1873855964
+-} ]
+\ No newline at end of file
++[ ]
+\ No newline at end of file
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"534b0794-8f85-43fb-adfe-5d3f1591786e\" name=\"Changes\" comment=\"Qurandan bazi suralar ok\">\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/Bot/src/main/java/uz/pdp/BotConstants.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/Bot/src/main/java/uz/pdp/BotConstants.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/Bot/src/main/java/uz/pdp/Main.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/Bot/src/main/java/uz/pdp/Main.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/Bot/src/main/java/uz/pdp/SakinaBot.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/Bot/src/main/java/uz/pdp/SakinaBot.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/BookBotService.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/BookBotService.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/KoranBotService.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/KoranBotService.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/MosqueService.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/MosqueService.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/PrayerTimeInlineService.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/PrayerTimeInlineService.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/PrayerTimeService.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/PrayerTimeService.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/Tasbex.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/Tasbex.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/BotService/src/main/java/uz/pdp/menyu/MenuService.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/Bot/src/main/java/uz/pdp/menyu/MenuService.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/BotService/src/main/java/uz/pdp/menyu/SurahMenyu.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/Bot/src/main/java/uz/pdp/menyu/SurahMenyu.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/BotService/src/main/java/uz/pdp/model/PrayerTime.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/BotService/src/main/java/uz/pdp/model/PrayerTime.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/BotService/src/main/java/uz/pdp/service/KoranService.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/BotService/src/main/java/uz/pdp/service/KoranService.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/BotService/src/main/java/uz/pdp/servicex/GetSurahUrl.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/GetSurahUrl.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/BotService/src/main/java/uz/pdp/servicex/MonthlyPrayerTimesUtil.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/BotService/src/main/java/uz/pdp/servicex/MonthlyPrayerTimesUtil.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/BotService/src/main/java/uz/pdp/util/BotUtil.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/BotService/src/main/java/uz/pdp/util/BotUtil.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/BotService/src/main/java/uz/pdp/util/FilePath.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/BotService/src/main/java/uz/pdp/util/FilePath.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/BotService/src/main/java/uz/pdp/util/ObjectUtil.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/Bot/src/main/java/uz/pdp/utill/ObjectUtil.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/file/surahState.json\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/file/surahState.json\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/pom.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/pom.xml\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"ProjectColorInfo\">{\r\n    &quot;associatedIndex&quot;: 0\r\n    }</component>\r\n  <component name=\"ProjectId\" id=\"2l6NgJEVzaH8KWu4VTdzP1aQmmx\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"Application.Main.executor\": \"Run\",\r\n    \"RunOnceActivity.OpenProjectViewOnStart\": \"true\",\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\r\n    \"SHARE_PROJECT_CONFIGURATION_FILES\": \"true\",\r\n    \"git-widget-placeholder\": \"master\",\r\n    \"jdk.selected.JAVA_MODULE\": \"openjdk-21\",\r\n    \"kotlin-language-version-configured\": \"true\",\r\n    \"last_opened_file_path\": \"D:/java-tutorial/Collection/Sakina_bot\",\r\n    \"node.js.detected.package.eslint\": \"true\",\r\n    \"node.js.detected.package.tslint\": \"true\",\r\n    \"node.js.selected.package.eslint\": \"(autodetect)\",\r\n    \"node.js.selected.package.tslint\": \"(autodetect)\",\r\n    \"nodejs_package_manager_path\": \"npm\",\r\n    \"project.structure.last.edited\": \"Modules\",\r\n    \"project.structure.proportion\": \"0.0\",\r\n    \"project.structure.side.proportion\": \"0.0\",\r\n    \"settings.editor.selected.configurable\": \"preferences.lookFeel\",\r\n    \"vue.rearranger.settings.migration\": \"true\"\r\n  }\r\n}]]></component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"MoveFile.RECENT_KEYS\">\r\n      <recent name=\"$PROJECT_DIR$/BotService/src/test/file\" />\r\n      <recent name=\"$PROJECT_DIR$/BotService/src/test\" />\r\n      <recent name=\"$PROJECT_DIR$/BotService/src/main/java/uz/pdp/engYaqinNamoz\" />\r\n      <recent name=\"$PROJECT_DIR$/Bot/src/main/java/uz/pdp\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"RunManager\" selected=\"Application.Main (1)\">\r\n    <configuration name=\"Main (1)\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"uz.pdp.Main\" />\r\n      <module name=\"BotServise\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"uz.pdp.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"Main\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"uz.pdp.Main\" />\r\n      <module name=\"Sakina_bot\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"uz.pdp.service.NearestPrayerTimeService\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <recent_temporary>\r\n      <list>\r\n        <item itemvalue=\"Application.Main (1)\" />\r\n        <item itemvalue=\"Application.Main\" />\r\n      </list>\r\n    </recent_temporary>\r\n  </component>\r\n  <component name=\"SharedIndexes\">\r\n    <attachedChunks>\r\n      <set>\r\n        <option value=\"jdk-21.0.2-openjdk-21.0.2-4caba194b151-322ed176\" />\r\n      </set>\r\n    </attachedChunks>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"534b0794-8f85-43fb-adfe-5d3f1591786e\" name=\"Changes\" comment=\"\" />\r\n      <created>1724496676516</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1724496676516</updated>\r\n      <workItem from=\"1724523427551\" duration=\"870000\" />\r\n      <workItem from=\"1724571075912\" duration=\"961000\" />\r\n      <workItem from=\"1724572042384\" duration=\"1000\" />\r\n      <workItem from=\"1724572317541\" duration=\"4000\" />\r\n      <workItem from=\"1724573671715\" duration=\"12456000\" />\r\n      <workItem from=\"1724645580452\" duration=\"6977000\" />\r\n      <workItem from=\"1724654763662\" duration=\"5490000\" />\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"Qurandan bazi suralar ok\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1724817216369</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1724817216369</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"2\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"Qurandan bazi suralar ok\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"Qurandan bazi suralar ok\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 98f6ea6c8bcf5d21b7a5dadd8e40cfb95f0fa429)
++++ b/.idea/workspace.xml	(date 1724947909439)
+@@ -5,27 +5,20 @@
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="534b0794-8f85-43fb-adfe-5d3f1591786e" name="Changes" comment="Qurandan bazi suralar ok">
++      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/BotConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/BotConstants.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/Main.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/SakinaBot.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/SakinaBot.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/BookBotService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/BookBotService.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/BookBotService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/BookService.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/GetSurahUrl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/SurahLanguageService.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/HijriDateService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/HijriDateService.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/KoranBotService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/KoranBotService.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/MosqueService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/MosqueService.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/NearestPrayerTimeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/NearestPrayerTimeService.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/PrayerTimeInlineService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/PrayerTimeInlineService.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/PrayerTimeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/PrayerTimeService.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/Tasbex.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/Tasbex.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/menyu/MenuService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/menyu/MenuService.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/menyu/SurahMenyu.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/menyu/SurahMenyu.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/model/PrayerTime.java" beforeDir="false" afterPath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/model/PrayerTime.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/service/KoranService.java" beforeDir="false" afterPath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/service/KoranService.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/servicex/GetSurahUrl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/service/GetSurahUrl.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/servicex/MonthlyPrayerTimesUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/servicex/MonthlyPrayerTimesUtil.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/util/BotUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/util/BotUtil.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/util/FilePath.java" beforeDir="false" afterPath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/util/FilePath.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/BotService/src/main/java/uz/pdp/util/ObjectUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bot/src/main/java/uz/pdp/utill/ObjectUtil.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/file/surahState.json" beforeDir="false" afterPath="$PROJECT_DIR$/file/surahState.json" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -57,7 +50,8 @@
+     "RunOnceActivity.OpenProjectViewOnStart": "true",
+     "RunOnceActivity.ShowReadmeOnStart": "true",
+     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+-    "git-widget-placeholder": "master",
++    "WebServerToolWindowFactoryState": "false",
++    "git-widget-placeholder": "Davron",
+     "jdk.selected.JAVA_MODULE": "openjdk-21",
+     "kotlin-language-version-configured": "true",
+     "last_opened_file_path": "D:/java-tutorial/Collection/Sakina_bot",
+@@ -137,6 +131,7 @@
+       <workItem from="1724573671715" duration="12456000" />
+       <workItem from="1724645580452" duration="6977000" />
+       <workItem from="1724654763662" duration="5490000" />
++      <workItem from="1724945296952" duration="2027000" />
+     </task>
+     <task id="LOCAL-00001" summary="Qurandan bazi suralar ok">
+       <option name="closed" value="true" />
+Index: Bot/src/main/java/uz/pdp/service/NearestPrayerTimeService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package uz.pdp.service;\r\n\r\nimport org.json.JSONObject;\r\nimport org.telegram.telegrambots.meta.api.methods.send.SendMessage;\r\n\r\nimport java.io.IOException;\r\nimport java.net.HttpURLConnection;\r\nimport java.net.URL;\r\nimport java.time.Duration;\r\nimport java.time.LocalDateTime;\r\nimport java.time.LocalTime;\r\nimport java.time.format.DateTimeFormatter;\r\nimport java.util.Scanner;\r\n\r\npublic class NearestPrayerTimeService {\r\n    public static SendMessage getNextPrayer(long chatId) {\r\n        SendMessage sendMessage = new SendMessage();\r\n        sendMessage.setChatId(chatId);\r\n        sendMessage.setText(getNearestPrayerTime());\r\n        return sendMessage;\r\n    }\r\n    private static String getNearestPrayerTime() {\r\n        String apiUrl = \"https://islomapi.uz/api/present/day?region=Toshkent\";\r\n\r\n        try {\r\n            URL url = new URL(apiUrl);\r\n            HttpURLConnection conn = (HttpURLConnection) url.openConnection();\r\n            conn.setRequestMethod(\"GET\");\r\n            conn.connect();\r\n            int responseCode = conn.getResponseCode();\r\n            if (responseCode != 200) {\r\n                throw new RuntimeException(\"HttpResponseCode: \" + responseCode);\r\n            } else {\r\n                StringBuilder inline = new StringBuilder();\r\n                Scanner scanner = new Scanner(url.openStream());\r\n                while (scanner.hasNext()) {\r\n                    inline.append(scanner.nextLine());\r\n                }\r\n                scanner.close();\r\n\r\n                JSONObject jsonObject = new JSONObject(inline.toString());\r\n                JSONObject times = jsonObject.getJSONObject(\"times\");\r\n\r\n                LocalDateTime currentDateTime = LocalDateTime.now();\r\n                return findNearestPrayer(currentDateTime, times);\r\n            }\r\n        } catch (IOException e) {\r\n            e.printStackTrace();\r\n        }\r\n\r\n        return \"Error: Unable to get prayer times.\";\r\n    }\r\n\r\n    private static String findNearestPrayer(LocalDateTime currentDateTime, JSONObject times) {\r\n        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern(\"HH:mm\");\r\n        LocalDateTime bomdodDateTime = LocalDateTime.of(currentDateTime.toLocalDate(), LocalTime.parse(times.getString(\"tong_saharlik\"), timeFormatter));\r\n        LocalDateTime quyoshDateTime = LocalDateTime.of(currentDateTime.toLocalDate(), LocalTime.parse(times.getString(\"quyosh\"), timeFormatter));\r\n        LocalDateTime peshinDateTime = LocalDateTime.of(currentDateTime.toLocalDate(), LocalTime.parse(times.getString(\"peshin\"), timeFormatter));\r\n        LocalDateTime asrDateTime = LocalDateTime.of(currentDateTime.toLocalDate(), LocalTime.parse(times.getString(\"asr\"), timeFormatter));\r\n        LocalDateTime shomDateTime = LocalDateTime.of(currentDateTime.toLocalDate(), LocalTime.parse(times.getString(\"shom_iftor\"), timeFormatter));\r\n        LocalDateTime xuftomDateTime = LocalDateTime.of(currentDateTime.toLocalDate(), LocalTime.parse(times.getString(\"hufton\"), timeFormatter));\r\n        LocalDateTime[] prayerDateTimes = {bomdodDateTime, quyoshDateTime, peshinDateTime, asrDateTime, shomDateTime, xuftomDateTime};\r\n        String[] prayerNames = {\"Bomdod\", \"Quyosh\", \"Peshin\", \"Asr\", \"Shom\", \"Hufton\"};\r\n        LocalDateTime nextPrayerDateTime = null;\r\n        String nextPrayerName = \"\";\r\n        Duration shortestDuration = Duration.ofDays(1);\r\n\r\n        for (int i = 0; i < prayerDateTimes.length; i++) {\r\n            LocalDateTime prayerDateTime = prayerDateTimes[i];\r\n            String prayerName = prayerNames[i];\r\n            if (currentDateTime.isAfter(prayerDateTime)) {\r\n                prayerDateTime = prayerDateTime.plusDays(1);\r\n            }\r\n            Duration duration = Duration.between(currentDateTime, prayerDateTime);\r\n            if (duration.isNegative()) {\r\n                duration = duration.plusDays(1);\r\n            }\r\n            if (duration.compareTo(shortestDuration) < 0) {\r\n                shortestDuration = duration;\r\n                nextPrayerDateTime = prayerDateTime;\r\n                nextPrayerName = prayerName;\r\n            }\r\n        }\r\n        long hours = shortestDuration.toHours();\r\n        long minutes = shortestDuration.toMinutes() % 60;\r\n        return String.format(\"Keyingi namoz vaqti bu %s: %d soat va %d daqiqa qoldi \\uD83D\\uDE0A\", nextPrayerName, hours, minutes);\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Bot/src/main/java/uz/pdp/service/NearestPrayerTimeService.java b/Bot/src/main/java/uz/pdp/service/NearestPrayerTimeService.java
+--- a/Bot/src/main/java/uz/pdp/service/NearestPrayerTimeService.java	(revision 98f6ea6c8bcf5d21b7a5dadd8e40cfb95f0fa429)
++++ b/Bot/src/main/java/uz/pdp/service/NearestPrayerTimeService.java	(date 1724935561461)
+@@ -10,6 +10,8 @@
+ import java.time.LocalDateTime;
+ import java.time.LocalTime;
+ import java.time.format.DateTimeFormatter;
++import java.util.HashMap;
++import java.util.Map;
+ import java.util.Scanner;
+ 
+ public class NearestPrayerTimeService {
+@@ -53,36 +55,32 @@
+ 
+     private static String findNearestPrayer(LocalDateTime currentDateTime, JSONObject times) {
+         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+-        LocalDateTime bomdodDateTime = LocalDateTime.of(currentDateTime.toLocalDate(), LocalTime.parse(times.getString("tong_saharlik"), timeFormatter));
+-        LocalDateTime quyoshDateTime = LocalDateTime.of(currentDateTime.toLocalDate(), LocalTime.parse(times.getString("quyosh"), timeFormatter));
+-        LocalDateTime peshinDateTime = LocalDateTime.of(currentDateTime.toLocalDate(), LocalTime.parse(times.getString("peshin"), timeFormatter));
+-        LocalDateTime asrDateTime = LocalDateTime.of(currentDateTime.toLocalDate(), LocalTime.parse(times.getString("asr"), timeFormatter));
+-        LocalDateTime shomDateTime = LocalDateTime.of(currentDateTime.toLocalDate(), LocalTime.parse(times.getString("shom_iftor"), timeFormatter));
+-        LocalDateTime xuftomDateTime = LocalDateTime.of(currentDateTime.toLocalDate(), LocalTime.parse(times.getString("hufton"), timeFormatter));
+-        LocalDateTime[] prayerDateTimes = {bomdodDateTime, quyoshDateTime, peshinDateTime, asrDateTime, shomDateTime, xuftomDateTime};
+-        String[] prayerNames = {"Bomdod", "Quyosh", "Peshin", "Asr", "Shom", "Hufton"};
+-        LocalDateTime nextPrayerDateTime = null;
++        Map<String, LocalDateTime> prayerTimes = new HashMap<>();
++        prayerTimes.put("Bomdod", LocalDateTime.of(currentDateTime.toLocalDate(), LocalTime.parse(times.getString("tong_saharlik"), timeFormatter)));
++        prayerTimes.put("Quyosh", LocalDateTime.of(currentDateTime.toLocalDate(), LocalTime.parse(times.getString("quyosh"), timeFormatter)));
++        prayerTimes.put("Peshin", LocalDateTime.of(currentDateTime.toLocalDate(), LocalTime.parse(times.getString("peshin"), timeFormatter)));
++        prayerTimes.put("Asr", LocalDateTime.of(currentDateTime.toLocalDate(), LocalTime.parse(times.getString("asr"), timeFormatter)));
++        prayerTimes.put("Shom", LocalDateTime.of(currentDateTime.toLocalDate(), LocalTime.parse(times.getString("shom_iftor"), timeFormatter)));
++        prayerTimes.put("Hufton", LocalDateTime.of(currentDateTime.toLocalDate(), LocalTime.parse(times.getString("hufton"), timeFormatter)));
++
+         String nextPrayerName = "";
+         Duration shortestDuration = Duration.ofDays(1);
++        for (Map.Entry<String, LocalDateTime> entry : prayerTimes.entrySet()) {
++            String prayerName = entry.getKey();
++            LocalDateTime prayerDateTime = entry.getValue();
+ 
+-        for (int i = 0; i < prayerDateTimes.length; i++) {
+-            LocalDateTime prayerDateTime = prayerDateTimes[i];
+-            String prayerName = prayerNames[i];
+             if (currentDateTime.isAfter(prayerDateTime)) {
+                 prayerDateTime = prayerDateTime.plusDays(1);
+             }
+             Duration duration = Duration.between(currentDateTime, prayerDateTime);
+-            if (duration.isNegative()) {
+-                duration = duration.plusDays(1);
+-            }
+             if (duration.compareTo(shortestDuration) < 0) {
+                 shortestDuration = duration;
+-                nextPrayerDateTime = prayerDateTime;
+                 nextPrayerName = prayerName;
+             }
+         }
+         long hours = shortestDuration.toHours();
+         long minutes = shortestDuration.toMinutes() % 60;
++
+         return String.format("Keyingi namoz vaqti bu %s: %d soat va %d daqiqa qoldi \uD83D\uDE0A", nextPrayerName, hours, minutes);
+     }
+ }
+Index: Bot/src/main/java/uz/pdp/service/KoranBotService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package uz.pdp.service;\r\n\r\nimport org.telegram.telegrambots.meta.api.methods.send.SendMessage;\r\nimport org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageReplyMarkup;\r\nimport org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;\r\nimport uz.pdp.model.SurahDigitState;\r\nimport uz.pdp.model.Surahs;\r\nimport uz.pdp.util.BotUtil;\r\nimport uz.pdp.utill.ObjectUtil;\r\n\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\n\r\npublic class KoranBotService {\r\n    private static List<Surahs> surahs = new ArrayList<>();\r\n    private static List<SurahDigitState> surahsState = new ArrayList<>();\r\n\r\n    public SendMessage getSurah(long chatId) {\r\n        SendMessage sendMessagec = new SendMessage();\r\n        sendMessagec.setChatId(chatId);\r\n        sendMessagec.setText(\"Surahs\");\r\n        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();\r\n        inlineKeyboardMarkup = getsurah(0);\r\n        sendMessagec.setReplyMarkup(inlineKeyboardMarkup);\r\n        return sendMessagec;\r\n    }\r\n\r\n    public EditMessageReplyMarkup getSurah(long chatId, Integer messageId) {\r\n        EditMessageReplyMarkup editMessage = new EditMessageReplyMarkup();\r\n        editMessage.setChatId(chatId);\r\n        editMessage.setMessageId(messageId);\r\n        ObjectUtil.koranService.setSurahsState(surahsState);\r\n        editMessage.setReplyMarkup(getsurah(getIndex(chatId)));\r\n        return editMessage;\r\n    }\r\n\r\n    private int getIndex(long chatId) {\r\n        surahsState = ObjectUtil.koranService.getSurahsState();\r\n        for (int i = 0; i < surahsState.size(); i++) {\r\n            if (surahsState.get(i).getChatId() == chatId) {\r\n                surahsState.get(i).setId(surahsState.get(i).getId() + 10);\r\n                ObjectUtil.koranService.setSurahsState(surahsState);\r\n                return surahsState.get(i).getId();\r\n            }\r\n        }\r\n        return 0;\r\n    }\r\n\r\n    private InlineKeyboardMarkup getsurah(int n) {\r\n        surahs = ObjectUtil.koranService.getSurahs();\r\n        List<Surahs> surah = ObjectUtil.koranService.getStringList(surahs, n);\r\n        InlineKeyboardMarkup inlinedKeyboardMarkup = BotUtil.inlineKeyboardMarkup(surah, 1);\r\n        return inlinedKeyboardMarkup;\r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Bot/src/main/java/uz/pdp/service/KoranBotService.java b/Bot/src/main/java/uz/pdp/service/KoranBotService.java
+--- a/Bot/src/main/java/uz/pdp/service/KoranBotService.java	(revision 98f6ea6c8bcf5d21b7a5dadd8e40cfb95f0fa429)
++++ b/Bot/src/main/java/uz/pdp/service/KoranBotService.java	(date 1724934917748)
+@@ -52,5 +52,4 @@
+         InlineKeyboardMarkup inlinedKeyboardMarkup = BotUtil.inlineKeyboardMarkup(surah, 1);
+         return inlinedKeyboardMarkup;
+     }
+-
+ }
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ExternalStorageConfigurationManager\" enabled=\"true\" />\r\n  <component name=\"MavenProjectsManager\">\r\n    <option name=\"originalFiles\">\r\n      <list>\r\n        <option value=\"$PROJECT_DIR$/pom.xml\" />\r\n      </list>\r\n    </option>\r\n    <option name=\"ignoredFiles\">\r\n      <set>\r\n        <option value=\"$PROJECT_DIR$/Backent/pom.xml\" />\r\n        <option value=\"$PROJECT_DIR$/SakinaBot/pom.xml\" />\r\n      </set>\r\n    </option>\r\n  </component>\r\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_21\" default=\"true\" project-jdk-name=\"openjdk-21\" project-jdk-type=\"JavaSDK\">\r\n    <output url=\"file://$PROJECT_DIR$/out\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+--- a/.idea/misc.xml	(revision 98f6ea6c8bcf5d21b7a5dadd8e40cfb95f0fa429)
++++ b/.idea/misc.xml	(date 1724947465353)
+@@ -14,7 +14,7 @@
+       </set>
+     </option>
+   </component>
+-  <component name="ProjectRootManager" version="2" languageLevel="JDK_21" default="true" project-jdk-name="openjdk-21" project-jdk-type="JavaSDK">
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_20" project-jdk-name="openjdk-21" project-jdk-type="JavaSDK">
+     <output url="file://$PROJECT_DIR$/out" />
+   </component>
+ </project>
+\ No newline at end of file
+Index: Bot/src/main/java/uz/pdp/service/HijriDateService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package uz.pdp.service;\r\n\r\nimport java.io.BufferedReader;\r\nimport java.io.InputStreamReader;\r\nimport java.net.HttpURLConnection;\r\nimport java.net.URL;\r\nimport org.json.JSONObject;\r\n\r\npublic class HijriDateService {\r\n    public static String fetchHijriDate() {\r\n        String apiUrl = \"https://islomapi.uz/api/present/day?region=Toshkent\";\r\n        StringBuilder response = new StringBuilder();\r\n        try {\r\n            URL url = new URL(apiUrl);\r\n            HttpURLConnection connection = (HttpURLConnection) url.openConnection();\r\n            connection.setRequestMethod(\"GET\");\r\n            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));\r\n            String line;\r\n            while ((line = reader.readLine()) != null) {\r\n                response.append(line);\r\n            }\r\n            reader.close();\r\n            JSONObject jsonObject = new JSONObject(response.toString());\r\n            JSONObject hijriDate = jsonObject.getJSONObject(\"hijri_date\");\r\n            String month = hijriDate.getString(\"month\");\r\n            int day = hijriDate.getInt(\"day\");\r\n            String weekday = jsonObject.getString(\"weekday\");\r\n            return \"Hijri Sana: \" + month + \" \" + day + \" (\" + weekday + \")\";\r\n        } catch (Exception e) {\r\n            e.printStackTrace();\r\n            return \"Error: Unable to fetch Hijri date.\";\r\n        }\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Bot/src/main/java/uz/pdp/service/HijriDateService.java b/Bot/src/main/java/uz/pdp/service/HijriDateService.java
+--- a/Bot/src/main/java/uz/pdp/service/HijriDateService.java	(revision 98f6ea6c8bcf5d21b7a5dadd8e40cfb95f0fa429)
++++ b/Bot/src/main/java/uz/pdp/service/HijriDateService.java	(date 1724934917737)
+@@ -4,31 +4,42 @@
+ import java.io.InputStreamReader;
+ import java.net.HttpURLConnection;
+ import java.net.URL;
++
+ import org.json.JSONObject;
+ 
+ public class HijriDateService {
++    private static final String API_URL = "https://islomapi.uz/api/present/day?region=Toshkent";
++
+     public static String fetchHijriDate() {
+-        String apiUrl = "https://islomapi.uz/api/present/day?region=Toshkent";
+-        StringBuilder response = new StringBuilder();
+         try {
+-            URL url = new URL(apiUrl);
+-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+-            connection.setRequestMethod("GET");
+-            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
++            String jsonResponse = makeHttpRequest(API_URL);
++            return parseHijriDate(jsonResponse);
++        } catch (Exception e) {
++            e.printStackTrace();
++            return "Error: Unable to fetch Hijri date.";
++        }
++    }
++
++    public static String makeHttpRequest(String apiUrl) throws Exception {
++        StringBuilder response = new StringBuilder();
++        URL url = new URL(apiUrl);
++        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
++        connection.setRequestMethod("GET");
++        try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));) {
+             String line;
+             while ((line = reader.readLine()) != null) {
+                 response.append(line);
+             }
+-            reader.close();
+-            JSONObject jsonObject = new JSONObject(response.toString());
+-            JSONObject hijriDate = jsonObject.getJSONObject("hijri_date");
+-            String month = hijriDate.getString("month");
+-            int day = hijriDate.getInt("day");
+-            String weekday = jsonObject.getString("weekday");
+-            return "Hijri Sana: " + month + " " + day + " (" + weekday + ")";
+-        } catch (Exception e) {
+-            e.printStackTrace();
+-            return "Error: Unable to fetch Hijri date.";
+-        }
++        }
++        return response.toString();
++    }
++
++    public static String parseHijriDate(String jsonResponse) {
++        JSONObject jsonObject = new JSONObject(jsonResponse);
++        JSONObject hijriDate = jsonObject.getJSONObject("hijri_date");
++        String month = hijriDate.getString("month");
++        int day = hijriDate.getInt("day");
++        String weekday = jsonObject.getString("weekday");
++        return "Hijri Sana: " + month + " " + day + " (" + weekday + ")";
+     }
+ }
+Index: BotService/src/main/java/uz/pdp/util/BotUtil.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package uz.pdp.util;\r\n\r\nimport lombok.experimental.UtilityClass;\r\nimport org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;\r\nimport org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;\r\nimport org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;\r\nimport org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;\r\nimport org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;\r\nimport uz.pdp.model.Koran;\r\nimport uz.pdp.model.Surahs;\r\n\r\nimport javax.swing.*;\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\nimport java.util.stream.Collectors;\r\nimport java.util.stream.IntStream;\r\n\r\n\r\n@UtilityClass\r\npublic class BotUtil {\r\n\r\n    public static ReplyKeyboardMarkup replyKeyboardMarkup(List<String> data, int n) {\r\n        List<KeyboardRow> keyboardRows = makeReplyKeyboardRow(data, n);\r\n\r\n        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();\r\n        replyKeyboardMarkup.setKeyboard(keyboardRows);\r\n        replyKeyboardMarkup.setResizeKeyboard(true);\r\n        replyKeyboardMarkup.setOneTimeKeyboard(true);\r\n\r\n        return replyKeyboardMarkup;\r\n    }\r\n\r\n    private static List<KeyboardRow> makeReplyKeyboardRow(List<String> data, int n) {\r\n        return IntStream.range(0, (data.size() + n - 1) / n)\r\n                .mapToObj(i -> {\r\n                    KeyboardRow row = new KeyboardRow();\r\n                    data.stream()\r\n                            .skip((long) i * n)\r\n                            .limit(n)\r\n                            .map(KeyboardButton::new)\r\n                            .forEach(row::add);\r\n                    return row;\r\n                })\r\n                .collect(Collectors.toList());\r\n    }\r\n\r\n//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////\r\n    public static <T> InlineKeyboardMarkup inlineKeyboardMarkup(List<String> data, List<String> callBackQueryData, int n) {\r\n        if (data.isEmpty() || callBackQueryData.isEmpty()) {\r\n            return new InlineKeyboardMarkup();\r\n        }\r\n\r\n        List<List<InlineKeyboardButton>> keyboardRows = makeInlineKeyboardRows(data, callBackQueryData, n);\r\n        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();\r\n        inlineKeyboardMarkup.setKeyboard(keyboardRows);\r\n        return inlineKeyboardMarkup;\r\n    }\r\n\r\n    private static <T> List<List<InlineKeyboardButton>> makeInlineKeyboardRows(List<T> data, List<T> callBackQueryData, int n) {\r\n        List<List<InlineKeyboardButton>> collect = new ArrayList<>();\r\n        List<InlineKeyboardButton> buttons = new ArrayList<>();\r\n        for (int i = 0; i < data.size(); i++) {\r\n            InlineKeyboardButton inlineKeyboardButton = createInlineKeyboardButton(data.get(i), callBackQueryData.get(i));\r\n            buttons.add(inlineKeyboardButton);\r\n            if ((i + 1) % n == 0){\r\n                collect.add(buttons);\r\n                buttons = new ArrayList<>();\r\n            }\r\n        }\r\n\r\n        if (!buttons.isEmpty()){\r\n            collect.add(buttons);\r\n        }\r\n\r\n        return collect;\r\n    }\r\n\r\n    private static <T> InlineKeyboardButton createInlineKeyboardButton(T model, T model2) {\r\n        InlineKeyboardButton button = new InlineKeyboardButton();\r\n        String callbackData = \"\";\r\n\r\n        if (model.equals(\"Lotin alifbosida\")) {\r\n            button.setText((String) model);\r\n            callbackData = (String) model2;\r\n        }\r\n        if (model.equals(\"باللغة العربية\")) {\r\n            button.setText((String)model);\r\n            callbackData = (String)model2;\r\n        }\r\n        if (model.equals(\"NEXT\")){\r\n            button.setText((String) model);\r\n            callbackData = (String) model2;\r\n        }\r\n        if (model.equals(\"BACK\")){\r\n            button.setText((String) model);\r\n            callbackData = (String) model2;\r\n        }\r\n\r\n        button.setCallbackData(callbackData);\r\n        return button;\r\n    }\r\n\r\n\r\n    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////\r\n    public static <T> InlineKeyboardMarkup inlineKeyboardMarkup(List<T> models, int n) {\r\n        if (models.isEmpty()) {\r\n            return new InlineKeyboardMarkup();\r\n        }\r\n\r\n        List<List<InlineKeyboardButton>> keyboardRows = makeInlineKeyboardRows(models, n);\r\n        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();\r\n        inlineKeyboardMarkup.setKeyboard(keyboardRows);\r\n        return inlineKeyboardMarkup;\r\n    }\r\n\r\n    private static <T> List<List<InlineKeyboardButton>> makeInlineKeyboardRows(List<T> models, int n) {\r\n        return IntStream.range(0, (models.size() + n - 1) / n)\r\n                .mapToObj(i -> models.stream()\r\n                        .skip((long) i * n)\r\n                        .limit(n)\r\n                        .map(BotUtil::createInlineKeyboardButton)\r\n                        .collect(Collectors.toList()))\r\n                .collect(Collectors.toList());\r\n    }\r\n\r\n    private static <T> InlineKeyboardButton createInlineKeyboardButton(T model) {\r\n        InlineKeyboardButton button = new InlineKeyboardButton();\r\n        String callbackData = \"\";\r\n\r\n        if (model instanceof Koran surahs) {\r\n            button.setText(surahs.getName());\r\n            callbackData = surahs.getName();\r\n        }\r\n        if (model instanceof Surahs surahs) {\r\n            button.setText(surahs.getId() + \"   \" + surahs.getTransliteration());\r\n            callbackData = \"surahs\" + surahs.getTransliteration();\r\n        }\r\n\r\n        button.setCallbackData(callbackData);\r\n        return button;\r\n    }\r\n\r\n    public static ReplyKeyboardMarkup getRequestPhoneNumberKeyboard() {\r\n        KeyboardButton button = new KeyboardButton(\"Share your phone number\");\r\n        button.setRequestContact(true);\r\n\r\n        KeyboardRow row = new KeyboardRow();\r\n        row.add(button);\r\n\r\n        List<KeyboardRow> keyboardRows = new ArrayList<>();\r\n        keyboardRows.add(row);\r\n\r\n        ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();\r\n        keyboardMarkup.setKeyboard(keyboardRows);\r\n        keyboardMarkup.setResizeKeyboard(true);\r\n        keyboardMarkup.setOneTimeKeyboard(true);\r\n\r\n        return keyboardMarkup;\r\n    }\r\n\r\n//    private static List<InlineKeyboardButton> getNextPrev(String data) {\r\n//        List<InlineKeyboardButton> buttons = new ArrayList<>();\r\n//\r\n//        InlineKeyboardButton inlineKeyboardButton = new InlineKeyboardButton();\r\n//        inlineKeyboardButton.setText(\"NEXT\");\r\n//        inlineKeyboardButton.setCallbackData(\"next\");\r\n//\r\n//        InlineKeyboardButton inlineKeyboardButton1 = new InlineKeyboardButton();\r\n//        inlineKeyboardButton1.setText(\"BACK\");\r\n//        inlineKeyboardButton1.setCallbackData(\"back\");\r\n//\r\n//        buttons.add(inlineKeyboardButton1);\r\n//        buttons.add( inlineKeyboardButton);\r\n//        return buttons;\r\n//    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/BotService/src/main/java/uz/pdp/util/BotUtil.java b/BotService/src/main/java/uz/pdp/util/BotUtil.java
+--- a/BotService/src/main/java/uz/pdp/util/BotUtil.java	(revision 98f6ea6c8bcf5d21b7a5dadd8e40cfb95f0fa429)
++++ b/BotService/src/main/java/uz/pdp/util/BotUtil.java	(date 1724947464307)
+@@ -45,22 +45,21 @@
+     }
+ 
+ //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-    public static <T> InlineKeyboardMarkup inlineKeyboardMarkup(List<String> data, List<String> callBackQueryData, int n) {
+-        if (data.isEmpty() || callBackQueryData.isEmpty()) {
++    public static <T> InlineKeyboardMarkup inlineKeyboardMarkup(List<String> data, List<String> callBack, int n) {
++        if (data.isEmpty() || callBack.isEmpty()) {
+             return new InlineKeyboardMarkup();
+         }
+-
+-        List<List<InlineKeyboardButton>> keyboardRows = makeInlineKeyboardRows(data, callBackQueryData, n);
++        List<List<InlineKeyboardButton>> keyboardRows = makeInlineKeyboardRows(data, callBack, n);
+         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+         inlineKeyboardMarkup.setKeyboard(keyboardRows);
+         return inlineKeyboardMarkup;
+     }
+ 
+-    private static <T> List<List<InlineKeyboardButton>> makeInlineKeyboardRows(List<T> data, List<T> callBackQueryData, int n) {
++    private static <T> List<List<InlineKeyboardButton>> makeInlineKeyboardRows(List<T> data, List<T> callBack, int n) {
+         List<List<InlineKeyboardButton>> collect = new ArrayList<>();
+         List<InlineKeyboardButton> buttons = new ArrayList<>();
+         for (int i = 0; i < data.size(); i++) {
+-            InlineKeyboardButton inlineKeyboardButton = createInlineKeyboardButton(data.get(i), callBackQueryData.get(i));
++            InlineKeyboardButton inlineKeyboardButton = createInlineKeyboardButton(data.get(i), callBack.get(i));
+             buttons.add(inlineKeyboardButton);
+             if ((i + 1) % n == 0){
+                 collect.add(buttons);
+@@ -95,12 +94,19 @@
+             button.setText((String) model);
+             callbackData = (String) model2;
+         }
++        if (model.equals("◀\uFE0F ")){
++            button.setText((String) model);
++            callbackData = (String) model2;
++        }
++        if (model.equals(" ▶\uFE0F ")){
++            button.setText((String) model);
++            callbackData = (String) model2;
++        }
+ 
+         button.setCallbackData(callbackData);
+         return button;
+     }
+ 
+-
+     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     public static <T> InlineKeyboardMarkup inlineKeyboardMarkup(List<T> models, int n) {
+         if (models.isEmpty()) {
+@@ -139,38 +145,4 @@
+         button.setCallbackData(callbackData);
+         return button;
+     }
+-
+-    public static ReplyKeyboardMarkup getRequestPhoneNumberKeyboard() {
+-        KeyboardButton button = new KeyboardButton("Share your phone number");
+-        button.setRequestContact(true);
+-
+-        KeyboardRow row = new KeyboardRow();
+-        row.add(button);
+-
+-        List<KeyboardRow> keyboardRows = new ArrayList<>();
+-        keyboardRows.add(row);
+-
+-        ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();
+-        keyboardMarkup.setKeyboard(keyboardRows);
+-        keyboardMarkup.setResizeKeyboard(true);
+-        keyboardMarkup.setOneTimeKeyboard(true);
+-
+-        return keyboardMarkup;
+-    }
+-
+-//    private static List<InlineKeyboardButton> getNextPrev(String data) {
+-//        List<InlineKeyboardButton> buttons = new ArrayList<>();
+-//
+-//        InlineKeyboardButton inlineKeyboardButton = new InlineKeyboardButton();
+-//        inlineKeyboardButton.setText("NEXT");
+-//        inlineKeyboardButton.setCallbackData("next");
+-//
+-//        InlineKeyboardButton inlineKeyboardButton1 = new InlineKeyboardButton();
+-//        inlineKeyboardButton1.setText("BACK");
+-//        inlineKeyboardButton1.setCallbackData("back");
+-//
+-//        buttons.add(inlineKeyboardButton1);
+-//        buttons.add( inlineKeyboardButton);
+-//        return buttons;
+-//    }
+ }
+\ No newline at end of file
+Index: Bot/src/main/java/uz/pdp/service/PrayerTimeInlineService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package uz.pdp.service;\r\n\r\nimport com.fasterxml.jackson.core.type.TypeReference;\r\nimport org.telegram.telegrambots.meta.api.methods.send.SendMessage;\r\nimport org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;\r\nimport org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;\r\nimport uz.pdp.model.PrayerTime;\r\nimport uz.pdp.util.FilePath;\r\nimport uz.pdp.util.JsonUtil;\r\nimport uz.pdp.servicex.MonthlyPrayerTimesUtil;\r\n\r\nimport java.text.DateFormatSymbols;\r\nimport java.text.SimpleDateFormat;\r\nimport java.util.ArrayList;\r\nimport java.util.Date;\r\nimport java.util.List;\r\n\r\npublic class PrayerTimeInlineService {\r\n    private static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat(\"yyyy-MM-dd\");\r\n    public static PrayerTime getTodayTimes() {\r\n        Date date = new Date();\r\n        String str = simpleDateFormat.format(date);\r\n        String[] split = str.split(\"-\");\r\n        String day = split[2];\r\n        String month = split[1];\r\n\r\n        return rootList(day, month);\r\n    }\r\n    private static PrayerTime rootList(String day, String month) {\r\n        List<PrayerTime> roots = JsonUtil.readGson(FilePath.PATH_NAMOZ_VAQTLARI, new TypeReference<>() {});\r\n        PrayerTime todayRoot = new PrayerTime();\r\n        for (PrayerTime root : roots) {\r\n            if (root.getDay() == Integer.parseInt(day) && root.getMonth() == Integer.parseInt(month)) {\r\n                todayRoot = root;\r\n            }\r\n        }\r\n        return todayRoot;\r\n    }\r\n    public static SendMessage sendPrayerTimesKeyboard(long chatId) {\r\n        MonthlyPrayerTimesUtil.write();\r\n        PrayerTime root = getTodayTimes();\r\n        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();\r\n\r\n        InlineKeyboardButton backButton = new InlineKeyboardButton();\r\n        InlineKeyboardButton backButton1 = new InlineKeyboardButton();\r\n        InlineKeyboardButton backButton2 = new InlineKeyboardButton();\r\n        backButton.setText(\"◀\\uFE0F \");\r\n        backButton1.setText(\" ▶\\uFE0F \");\r\n        backButton.setCallbackData(\"backk\");\r\n        backButton1.setCallbackData(\"nextt\");\r\n        String monthName = new DateFormatSymbols().getMonths()[root.getMonth() - 1];\r\n        backButton2.setText(root.getDay() + \" - \" + monthName);\r\n        backButton2.setCallbackData(\"date\");\r\n\r\n        InlineKeyboardButton bomdod = new InlineKeyboardButton();\r\n        bomdod.setText(\"Bomdod:  \" + root.getTimes().getTong_saharlik());\r\n        bomdod.setCallbackData(\"bomdod\");\r\n\r\n        InlineKeyboardButton peshin = new InlineKeyboardButton();\r\n        peshin.setText(\"Peshin:  \" + root.getTimes().getPeshin());\r\n        peshin.setCallbackData(\"peshin\");\r\n\r\n        InlineKeyboardButton asr = new InlineKeyboardButton();\r\n        asr.setText(\"Asr:  \" + root.getTimes().getAsr());\r\n        asr.setCallbackData(\"asr\");\r\n\r\n        InlineKeyboardButton shom = new InlineKeyboardButton();\r\n        shom.setText(\"Shom:  \" + root.getTimes().getShom_iftor());\r\n        shom.setCallbackData(\"shom\");\r\n\r\n        InlineKeyboardButton xuftom = new InlineKeyboardButton();\r\n        xuftom.setText(\"Huftom:  \" + root.getTimes().getHufton());\r\n        xuftom.setCallbackData(\"xuftom\");\r\n\r\n        List<InlineKeyboardButton> row1 = new ArrayList<>();\r\n        row1.add(bomdod);\r\n        List<InlineKeyboardButton> row2 = new ArrayList<>();\r\n        row2.add(peshin);\r\n        List<InlineKeyboardButton> row3 = new ArrayList<>();\r\n        row3.add(asr);\r\n        List<InlineKeyboardButton> row4 = new ArrayList<>();\r\n        row4.add(shom);\r\n        List<InlineKeyboardButton> row5 = new ArrayList<>();\r\n        row5.add(xuftom);\r\n        List<InlineKeyboardButton> row6 = new ArrayList<>();\r\n        row6.add(backButton);\r\n        row6.add(backButton2);\r\n        row6.add(backButton1);\r\n        List<List<InlineKeyboardButton>> rows = new ArrayList<>();\r\n        rows.add(row1);\r\n        rows.add(row2);\r\n        rows.add(row3);\r\n        rows.add(row4);\r\n        rows.add(row5);\r\n        rows.add(row6);\r\n        inlineKeyboardMarkup.setKeyboard(rows);\r\n        SendMessage message = new SendMessage();\r\n        message.setChatId(chatId);\r\n        message.setReplyMarkup(inlineKeyboardMarkup);\r\n\r\n        return message;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Bot/src/main/java/uz/pdp/service/PrayerTimeInlineService.java b/Bot/src/main/java/uz/pdp/service/PrayerTimeInlineService.java
+--- a/Bot/src/main/java/uz/pdp/service/PrayerTimeInlineService.java	(revision 98f6ea6c8bcf5d21b7a5dadd8e40cfb95f0fa429)
++++ b/Bot/src/main/java/uz/pdp/service/PrayerTimeInlineService.java	(date 1724947464238)
+@@ -5,6 +5,7 @@
+ import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
+ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
+ import uz.pdp.model.PrayerTime;
++import uz.pdp.util.BotUtil;
+ import uz.pdp.util.FilePath;
+ import uz.pdp.util.JsonUtil;
+ import uz.pdp.servicex.MonthlyPrayerTimesUtil;
+@@ -17,16 +18,26 @@
+ 
+ public class PrayerTimeInlineService {
+     private static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+-    public static PrayerTime getTodayTimes() {
++
++    public static String getToday(){
+         Date date = new Date();
+         String str = simpleDateFormat.format(date);
+         String[] split = str.split("-");
+         String day = split[2];
++        return day;
++    }
++
++    public static String getMonth(){
++        Date date = new Date();
++        String str = simpleDateFormat.format(date);
++        String[] split = str.split("-");
+         String month = split[1];
+-
+-        return rootList(day, month);
++        return month;
+     }
+-    private static PrayerTime rootList(String day, String month) {
++
++    private static PrayerTime root() {
++        String month = getMonth();
++        String day = getToday();
+         List<PrayerTime> roots = JsonUtil.readGson(FilePath.PATH_NAMOZ_VAQTLARI, new TypeReference<>() {});
+         PrayerTime todayRoot = new PrayerTime();
+         for (PrayerTime root : roots) {
+@@ -38,9 +49,24 @@
+     }
+     public static SendMessage sendPrayerTimesKeyboard(long chatId) {
+         MonthlyPrayerTimesUtil.write();
+-        PrayerTime root = getTodayTimes();
++        PrayerTime root = root();
++        String monthName = new DateFormatSymbols().getMonths()[root.getMonth() - 1];
++
++        List<String> date = List.of("◀\uFE0F ", " ▶\uFE0F ", root.getDay() + " - " + monthName, "Bomdod:  " + root.getTimes().getTong_saharlik(),
++                "Peshin:  " + root.getTimes().getPeshin(), "Asr:  " + root.getTimes().getAsr(), "Shom:  " + root.getTimes().getShom_iftor(),
++                "Huftom:  " + root.getTimes().getHufton());
++        List<String> calbackQuary = List.of("backk", "nextt", "date", "bomdod", "peshin", "asr", "shom", "xuftom");
++
++        InlineKeyboardMarkup inlineKeyboardMarkup = BotUtil.inlineKeyboardMarkup(date, calbackQuary, 1);
++
++        SendMessage sendMessage = new SendMessage();
++        sendMessage.setChatId(chatId);
++        sendMessage.setReplyMarkup(inlineKeyboardMarkup);
++        return sendMessage;
++
++////
++
+         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+-
+         InlineKeyboardButton backButton = new InlineKeyboardButton();
+         InlineKeyboardButton backButton1 = new InlineKeyboardButton();
+         InlineKeyboardButton backButton2 = new InlineKeyboardButton();
+@@ -48,7 +74,6 @@
+         backButton1.setText(" ▶\uFE0F ");
+         backButton.setCallbackData("backk");
+         backButton1.setCallbackData("nextt");
+-        String monthName = new DateFormatSymbols().getMonths()[root.getMonth() - 1];
+         backButton2.setText(root.getDay() + " - " + monthName);
+         backButton2.setCallbackData("date");
+ 
+@@ -94,10 +119,10 @@
+         rows.add(row5);
+         rows.add(row6);
+         inlineKeyboardMarkup.setKeyboard(rows);
+-        SendMessage message = new SendMessage();
+-        message.setChatId(chatId);
+-        message.setReplyMarkup(inlineKeyboardMarkup);
++        SendMessage sendMessage = new SendMessage();
++        sendMessage.setChatId(chatId);
++        sendMessage.setReplyMarkup(inlineKeyboardMarkup);
+ 
+-        return message;
++        return sendMessage;
+     }
+ }

@@ -2,14 +2,11 @@ package uz.pdp.service;
 
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 import uz.pdp.util.BotUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class BookBotService {
+public class BookService {
     public static SendMessage bookMenyu(Long chatId) {
 
         List<String> stringList = List.of("Audio Kitoblar\uD83C\uDFA7",

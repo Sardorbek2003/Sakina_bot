@@ -28,7 +28,7 @@ public class SakinaBot extends TelegramLongPollingBot {
                     SendMessage sendMessage = MenuService.showMenyu(chatId);
                     execute_(sendMessage);
                 } else if (StringUtils.startsWith(text, ISLOMIY_KITOB)) {
-                    SendMessage sendMessage = BookBotService.bookMenyu(chatId);
+                    SendMessage sendMessage = BookService.bookMenyu(chatId);
                     sendMessage.setText("Islomiy Kitoblar");
                     execute_(sendMessage);
                 } else if (message.getText().equals(NAMOZ_VAQT_2)) {
@@ -55,7 +55,7 @@ public class SakinaBot extends TelegramLongPollingBot {
                 } else if (text.equals(TASBEX)) {
                     SendMessage sendMessage = Tasbex.getTasbex(chatId,"0");
                     sendMessage.setChatId(chatId);
-                    sendMessage.setText("Tasbex 0/33");
+                    sendMessage.setText("PUSH");
                     execute_(sendMessage);
                 } else if (text.equals(QURONI_KARIMDAN_SURAH)) {
                   ObjectUtil.koranService.newMenyu(chatId,0);
@@ -96,19 +96,19 @@ public class SakinaBot extends TelegramLongPollingBot {
                 execute_update(surah);
             }
             if (data.startsWith("surahs")) {
-                SendMessage sendMessage = GetSurahUrl.quranMenyu(chatId, data);
+                SendMessage sendMessage = SurahLanguageService.quranMenyu(chatId, data);
                 execute_(sendMessage);
             }
             if (data.startsWith("lsuralar")) {
                 SendMessage sendMessage = new SendMessage();
-                String surah = GetSurahUrl.getLotinSurah(data);
+                String surah = SurahLanguageService.getLotinSurah(data);
                 sendMessage.setChatId(chatId);
                 sendMessage.setText(surah);
                 execute_(sendMessage);
             }
             if (data.startsWith("asuralar")) {
                 SendMessage sendMessage = new SendMessage();
-                String surah = GetSurahUrl.getAraSurah(data);
+                String surah = SurahLanguageService.getAraSurah(data);
                 sendMessage.setChatId(chatId);
                 sendMessage.setText(surah);
                 execute_(sendMessage);

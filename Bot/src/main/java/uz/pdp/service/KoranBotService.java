@@ -3,6 +3,7 @@ package uz.pdp.service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageReplyMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import uz.pdp.model.SurahDigitState;
 import uz.pdp.model.Surahs;
 import uz.pdp.util.BotUtil;
@@ -49,8 +50,15 @@ public class KoranBotService {
     private InlineKeyboardMarkup getsurah(int n) {
         surahs = ObjectUtil.koranService.getSurahs();
         List<Surahs> surah = ObjectUtil.koranService.getStringList(surahs, n);
-        InlineKeyboardMarkup inlinedKeyboardMarkup = BotUtil.inlineKeyboardMarkup(surah, 1);
-        return inlinedKeyboardMarkup;
-    }
+        InlineKeyboardMarkup inlinedKeyboardMarkup1 = BotUtil.inlineKeyboardMarkup(surah, 1);
 
+        List<String> back = List.of("Back", "Next");
+        List<String> next = List.of("backSurax", "nextSurax");
+
+        InlineKeyboardMarkup inlineKeyboardMarkup2 = BotUtil.inlineKeyboardMarkup(back, next, 2);
+        List<List<InlineKeyboardButton>> keyboard = inlinedKeyboardMarkup1.getKeyboard();
+        keyboard.add(inlineKeyboardMarkup2.getKeyboard().get(0));
+
+        return inlinedKeyboardMarkup1;
+    }
 }

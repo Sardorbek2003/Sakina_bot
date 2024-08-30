@@ -10,9 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class KoranService {
+    private static final int SURAH = 114;
     public List<Surahs> getStringList(List<Surahs> surahs, int n) {
         List<Surahs> surahsList = new ArrayList<>();
-        for (int i = n; i < n + 10 && n <= 114; i++) {
+        for (int i = n; i < n + 10 && n <= SURAH; i++) {
             Surahs surah = surahs.get(i);
             surahsList.add(surah);
         }
