@@ -14,7 +14,7 @@ public class MenuService {
 
         List<String> stringList = List.of("Namoz Vaqtlari\uD83D\uDD58", "Eng Yaqin Namoz\uD83D\uDCAC", "Eng yaqin Masjidlar\uD83D\uDD4C",
                 "Tasbex\uD83D\uDCFF", "Quroni Karimdan Bazi Suralar\uD83D\uDCD6", "Muhim Duolar\uD83E\uDD32",
-                "Xijriy Yil Xisobi\uD83D\uDCC6", "Islomiy Kitoblar\uD83D\uDCDA");
+                "Xijriy Yil Xisobi\uD83D\uDCC6", "Islomiy Kitoblar\uD83D\uDCDA", "Quran☪\uFE0F");
 
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(chatId);

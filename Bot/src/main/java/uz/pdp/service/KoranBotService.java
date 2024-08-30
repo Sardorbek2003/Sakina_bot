@@ -3,6 +3,8 @@ package uz.pdp.service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageReplyMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
+
 import uz.pdp.model.SurahDigitState;
 import uz.pdp.model.Surahs;
 import uz.pdp.util.BotUtil;
@@ -51,6 +53,15 @@ public class KoranBotService {
         List<Surahs> surah = ObjectUtil.koranService.getStringList(surahs, n);
         InlineKeyboardMarkup inlinedKeyboardMarkup = BotUtil.inlineKeyboardMarkup(surah, 1);
         return inlinedKeyboardMarkup;
+    }
+
+    public static SendMessage surahList(Long chatId) {
+        SendMessage sendMessage = new SendMessage();
+        sendMessage.setChatId(chatId);
+        List<String> list = List.of("Quron suralari\uD83E\uDEC0", " Back\uD83D\uDD19");
+        ReplyKeyboardMarkup replyKeyboardMarkup = BotUtil.replyKeyboardMarkup(list, 1);
+        sendMessage.setReplyMarkup(replyKeyboardMarkup);
+        return sendMessage;
     }
 
 }

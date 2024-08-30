@@ -13,7 +13,7 @@ public class BookBotService {
     public static SendMessage bookMenyu(Long chatId) {
 
         List<String> stringList = List.of("Audio Kitoblar\uD83C\uDFA7",
-                "Audio Kitoblar\uD83C\uDFA7", "Back⬅\uFE0F");
+                "Pdf Kitoblar\uD83D\uDCD5", "Back⬅\uFE0F");
 
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(chatId);

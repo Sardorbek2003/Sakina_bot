@@ -19,6 +19,7 @@ public class NearestPrayerTimeService {
         sendMessage.setText(getNearestPrayerTime());
         return sendMessage;
     }
+
     private static String getNearestPrayerTime() {
         String apiUrl = "https://islomapi.uz/api/present/day?region=Toshkent";
 

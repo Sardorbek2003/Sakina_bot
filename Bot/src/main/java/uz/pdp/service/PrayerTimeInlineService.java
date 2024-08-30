@@ -17,6 +17,7 @@ import java.util.List;
 
 public class PrayerTimeInlineService {
     private static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
     public static PrayerTime getTodayTimes() {
         Date date = new Date();
         String str = simpleDateFormat.format(date);
@@ -26,8 +27,10 @@ public class PrayerTimeInlineService {
 
         return rootList(day, month);
     }
+
     private static PrayerTime rootList(String day, String month) {
-        List<PrayerTime> roots = JsonUtil.readGson(FilePath.PATH_NAMOZ_VAQTLARI, new TypeReference<>() {});
+        List<PrayerTime> roots = JsonUtil.readGson(FilePath.PATH_NAMOZ_VAQTLARI, new TypeReference<>() {
+        });
         PrayerTime todayRoot = new PrayerTime();
         for (PrayerTime root : roots) {
             if (root.getDay() == Integer.parseInt(day) && root.getMonth() == Integer.parseInt(month)) {
@@ -36,6 +39,7 @@ public class PrayerTimeInlineService {
         }
         return todayRoot;
     }
+
     public static SendMessage sendPrayerTimesKeyboard(long chatId) {
         MonthlyPrayerTimesUtil.write();
         PrayerTime root = getTodayTimes();
