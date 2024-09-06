@@ -7,10 +7,10 @@ import java.net.URL;
 
 import org.json.JSONObject;
 
-public class HijriDateService {
+public class HijriDateBotService {
     private static final String API_URL = "https://islomapi.uz/api/present/day?region=Toshkent";
 
-    public static String fetchHijriDate() {
+    public String fetchHijriDate() {
         try {
             String jsonResponse = makeHttpRequest(API_URL);
             return parseHijriDate(jsonResponse);
@@ -20,7 +20,7 @@ public class HijriDateService {
         }
     }
 
-    public static String makeHttpRequest(String apiUrl) throws Exception {
+    public String makeHttpRequest(String apiUrl) throws Exception {
         StringBuilder response = new StringBuilder();
         URL url = new URL(apiUrl);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -34,7 +34,7 @@ public class HijriDateService {
         return response.toString();
     }
 
-    public static String parseHijriDate(String jsonResponse) {
+    public String parseHijriDate(String jsonResponse) {
         JSONObject jsonObject = new JSONObject(jsonResponse);
         JSONObject hijriDate = jsonObject.getJSONObject("hijri_date");
         String month = hijriDate.getString("month");

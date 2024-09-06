@@ -3,16 +3,13 @@ package uz.pdp.service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Location;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 import uz.pdp.util.BotUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class MosqueService {
+public class MosqueBotService {
 
-    public static SendMessage requestUserLocation(long chatId) {
+    public SendMessage requestUserLocation(long chatId) {
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(chatId);
         sendMessage.setText("Please share your location to find the nearest mosque.");
@@ -24,7 +21,7 @@ public class MosqueService {
         return sendMessage;
     }
 
-    public static String getMapLink(Location userLocation) {
+    public String getMapLink(Location userLocation) {
         double latitude = userLocation.getLatitude();
         double longitude = userLocation.getLongitude();
 

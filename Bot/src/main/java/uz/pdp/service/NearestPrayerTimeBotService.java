@@ -2,6 +2,7 @@ package uz.pdp.service;
 
 import org.json.JSONObject;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import uz.pdp.utill.ObjectUtil;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -14,14 +15,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class NearestPrayerTimeService {
-    public static SendMessage getNextPrayer(long chatId) {
+public class NearestPrayerTimeBotService {
+    public SendMessage getNextPrayer(long chatId) {
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(chatId);
         sendMessage.setText(getNearestPrayerTime());
         return sendMessage;
     }
-    private static String getNearestPrayerTime() {
+
+    private String getNearestPrayerTime() {
         String apiUrl = "https://islomapi.uz/api/present/day?region=Toshkent";
 
         try {
@@ -53,7 +55,7 @@ public class NearestPrayerTimeService {
         return "Error: Unable to get prayer times.";
     }
 
-    private static String findNearestPrayer(LocalDateTime currentDateTime, JSONObject times) {
+    private String findNearestPrayer(LocalDateTime currentDateTime, JSONObject times) {
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
         Map<String, LocalDateTime> prayerTimes = new HashMap<>();
         prayerTimes.put("Bomdod", LocalDateTime.of(currentDateTime.toLocalDate(), LocalTime.parse(times.getString("tong_saharlik"), timeFormatter)));

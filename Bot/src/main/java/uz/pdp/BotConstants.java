@@ -3,7 +3,6 @@ package uz.pdp;
 public interface BotConstants {
     String START = "/start";
     String BACK = "Back";
-    String ISLOMIY_KITOB = "Islomiy Kitoblar";
     String NAMOZ_VAQT = "Namoz Vaqtlari";
     String NAMOZ_VAQT_2 = "Namoz vaqtlari";
     String ENG_YAQIN_NAMOZ = "Eng Yaqin Namoz\uD83D\uDCAC";
@@ -14,9 +13,18 @@ public interface BotConstants {
     String SURAH_STARTS = "surahs";
     String SOME_CALLBACK_DATA = "someCallbackData";
     String BOMDOD = "bomdod";
-    String NEXT = "next";
-    String BACK_CALLBACK = "back";
-    String LSURALAR_STARTS = "lsuralar";
-    String ASURALAR_STARTS = "asuralar";
+    String PESHIN = "peshin";
+    String ASR = "asr";
+    String SHOM = "shom";
+    String XUFTON = "xufton";
+    String NEXT_SURAX = "nextSurax";
+    String BACK_SURAX = "backSurax";
+    String LSURALAR_STARTS = "lsurahs";
+    String ASURALAR_STARTS = "asurahs";
     String TASBEX_CALLBACK = "tasbex";
+    String QURAN = "Quran☪️";
+    String QURAN_SURALARI = "Quron suralari\uD83E\uDEC0";
+    String ALLOH_NAME = "✨Allohning go`zal ismlari";
+    String NEXTT = "nextt";
+    String BACKK = "backk";
 }

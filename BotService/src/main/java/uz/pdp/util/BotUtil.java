@@ -44,7 +44,7 @@ public class BotUtil {
                 .collect(Collectors.toList());
     }
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public static <T> InlineKeyboardMarkup inlineKeyboardMarkup(List<String> data, List<String> callBack, int n) {
         if (data.isEmpty() || callBack.isEmpty()) {
             return new InlineKeyboardMarkup();
@@ -61,81 +61,21 @@ public class BotUtil {
         for (int i = 0; i < data.size(); i++) {
             InlineKeyboardButton inlineKeyboardButton = createInlineKeyboardButton(data.get(i), callBack.get(i));
             buttons.add(inlineKeyboardButton);
-            if ((i + 1) % n == 0){
+            if ((i + 1) % n == 0) {
                 collect.add(buttons);
                 buttons = new ArrayList<>();
             }
         }
-
-        if (!buttons.isEmpty()){
+        if (!buttons.isEmpty()) {
             collect.add(buttons);
         }
-
         return collect;
     }
 
     private static <T> InlineKeyboardButton createInlineKeyboardButton(T model, T model2) {
         InlineKeyboardButton button = new InlineKeyboardButton();
-        String callbackData = "";
-
-        if (model.equals("Lotin alifbosida")) {
-            button.setText((String) model);
-            callbackData = (String) model2;
-        }
-        if (model.equals("باللغة العربية")) {
-            button.setText((String)model);
-            callbackData = (String)model2;
-        }
-        if (model.equals("NEXT")){
-            button.setText((String) model);
-            callbackData = (String) model2;
-        }
-        if (model.equals("BACK")){
-            button.setText((String) model);
-            callbackData = (String) model2;
-        }
-        if (model.equals("◀\uFE0F ")){
-            button.setText((String) model);
-            callbackData = (String) model2;
-        }
-        if (model.equals(" ▶\uFE0F ")){
-            button.setText((String) model);
-            callbackData = (String) model2;
-        }
-        if (String.valueOf(model).startsWith("Bomdod")){
-            button.setText((String) model);
-            callbackData = (String) model2;
-        }
-        if (String.valueOf(model).startsWith("Peshin")){
-            button.setText((String) model);
-            callbackData = (String) model2;
-        }
-        if (String.valueOf(model).startsWith("Asr")){
-            button.setText((String) model);
-            callbackData = (String) model2;
-        }
-        if (String.valueOf(model).startsWith("Shom")){
-            button.setText((String) model);
-            callbackData = (String) model2;
-        }
-        if (String.valueOf(model).startsWith("Huftom")){
-            button.setText((String) model);
-            callbackData = (String) model2;
-        }
-        if (String.valueOf(model).matches("^\\d{1,2} - (January|February|March|April|May|June|July|August|September|October|November|December)$")){
-            button.setText((String) model);
-            callbackData = (String) model2;
-        }
-        if (String.valueOf(model).startsWith("Back")){
-            button.setText((String) model);
-            callbackData = (String) model2;
-        }
-        if (String.valueOf(model).startsWith("Next")){
-            button.setText((String) model);
-            callbackData = (String) model2;
-        }
-
-        button.setCallbackData(callbackData);
+        button.setText((String) model);
+        button.setCallbackData((String) model2);
         return button;
     }
 

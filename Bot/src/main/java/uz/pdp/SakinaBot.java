@@ -2,8 +2,10 @@ package uz.pdp;
 
 import org.apache.commons.lang3.StringUtils;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
+import org.telegram.telegrambots.meta.api.methods.send.SendAudio;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageReplyMarkup;
+import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.meta.api.objects.*;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import uz.pdp.menyu.MenuService;
@@ -13,6 +15,7 @@ import uz.pdp.utill.ObjectUtil;
 import java.util.Date;
 
 import static uz.pdp.BotConstants.*;
+import static uz.pdp.NomozConstants.*;
 
 public class SakinaBot extends TelegramLongPollingBot {
 
@@ -27,48 +30,55 @@ public class SakinaBot extends TelegramLongPollingBot {
                 if (StringUtils.equals(text, START) || text.startsWith(BACK)) {
                     SendMessage sendMessage = MenuService.showMenyu(chatId);
                     execute_(sendMessage);
-                } else if (StringUtils.startsWith(text, ISLOMIY_KITOB)) {
-                    SendMessage sendMessage = BookService.bookMenyu(chatId);
-                    sendMessage.setText("Islomiy Kitoblar");
-                    execute_(sendMessage);
+                } else if (StringUtils.equals(text, ALLOH_NAME)) {
+                    SendAudio sendAudio = ObjectUtil.namesAllahBotService.allohName(chatId);
+                    sendAudio.setCaption("Audio formatda");
+                    setSendAudio(sendAudio);
                 } else if (message.getText().equals(NAMOZ_VAQT_2)) {
-                    SendMessage sendMessage = PrayerTimeInlineService.sendPrayerTimesKeyboard(chatId);
+                    SendMessage sendMessage = ObjectUtil.prayerTimeInlineBotService.sendPrayerTimesKeyboard(chatId);
                     sendMessage.setText(new Date().toString());
                     execute_(sendMessage);
                 } else if (text.startsWith(NAMOZ_VAQT)) {
-                    SendMessage sendMessage = PrayerTimeService.getNamozVatlari(chatId);
+                    SendMessage sendMessage = ObjectUtil.prayerTimeBotService.getNamozVatlari(chatId);
                     sendMessage.setText(NAMOZ_VAQT);
                     execute_(sendMessage);
                 } else if (text.startsWith(ENG_YAQIN_NAMOZ)) {
-                    SendMessage sendMessage = NearestPrayerTimeService.getNextPrayer(chatId);
+                    SendMessage sendMessage = ObjectUtil.nearestPrayerTimeBotService.getNextPrayer(chatId);
                     execute_(sendMessage);
                 } else if (text.equals(HIJRIY_YIL_XISOB)) {
-                    String hijriDate = HijriDateService.fetchHijriDate();
+                    String hijriDate = ObjectUtil.hijriDateBotService.fetchHijriDate();
                     SendMessage sendMessage = new SendMessage();
                     sendMessage.setChatId(chatId);
                     sendMessage.setText(hijriDate);
                     execute_(sendMessage);
                 } else if (text.equals(ENG_YAQIN_MASJID)) {
-                    SendMessage sendMessage = MosqueService.requestUserLocation(chatId);
-                    sendMessage.setText("Yaqin masjidlar");
+                    SendMessage sendMessage = ObjectUtil.mosqueBotService.requestUserLocation(chatId);
+                    sendMessage.setText(ENG_YAQIN_MASJID);
                     execute_(sendMessage);
                 } else if (text.equals(TASBEX)) {
-                    SendMessage sendMessage = Tasbex.getTasbex(chatId,"0");
+                    SendMessage sendMessage = ObjectUtil.tasbexBotService.getTasbex(message.getChatId(), "0");
                     sendMessage.setChatId(chatId);
-                    sendMessage.setText("PUSH");
                     execute_(sendMessage);
                 } else if (text.equals(QURONI_KARIMDAN_SURAH)) {
-                  ObjectUtil.koranService.newMenyu(chatId,0);
-                  SendMessage sendMessage = ObjectUtil.koranBotService.getSurah(chatId);
-                  sendMessage.setChatId(chatId);
-                  sendMessage.setText(SURAH_STARTS);
-                    System.out.println(sendMessage);
-                  execute_(sendMessage);
+                    ObjectUtil.koranService.newMenyu(chatId, 0);
+                    SendMessage sendMessage = ObjectUtil.koranBotService.getSurah(chatId);
+                    sendMessage("Surahs",chatId);
+                    execute_(sendMessage);
+                } else if (text.equals(QURAN)) {
+                    SendMessage sendMessage = KoranBotService.surahList(chatId);
+                    sendMessage.setText("Suralar");
+                    execute_(sendMessage);
+                } else if (text.equals(QURAN_SURALARI)) {
+                    SendMessage sendMessage = ImamNamesBotService.imamMenu(chatId);
+                    sendMessage.setText("Imom menu");
+                    execute_(sendMessage);
+                } else if (ImamNamesBotService.IMAM_MENU.containsKey(text)) {
+                    sendMultipleAudios(chatId, text);
                 }
             } else if (message != null && message.hasLocation()) {
                 Location userLocation = message.getLocation();
                 long chatId = message.getChatId();
-                String mapLink = MosqueService.getMapLink(userLocation);
+                String mapLink = ObjectUtil.mosqueBotService.getMapLink(userLocation);
                 SendMessage sendMessage = new SendMessage();
                 sendMessage.setChatId(chatId);
                 sendMessage.setText("Here is a link to find the nearest mosques on Google Maps:\n" + mapLink);
@@ -79,62 +89,76 @@ public class SakinaBot extends TelegramLongPollingBot {
             String data = callbackQuery.getData();
             long chatId = callbackQuery.getMessage().getChatId();
             Integer inlineMessageId = callbackQuery.getMessage().getMessageId();
-            if (data.equals("someCallbackData")) {
+            if (data.equals(SOME_CALLBACK_DATA)) {
                 SendMessage sendMessage = new SendMessage();
                 sendMessage.setChatId(chatId);
                 sendMessage.setText("Callback query handled: " + data);
                 execute_(sendMessage);
             }
-            if (data.equals("next")) {
-                ObjectUtil.koranService.newMenyu(chatId,10);
-                EditMessageReplyMarkup surah = ObjectUtil.koranBotService.getSurah(chatId, inlineMessageId);
+            if (data.equals(NEXT_SURAX)) {
+                ObjectUtil.koranService.newMenyu(chatId, 10);
+                EditMessageReplyMarkup surah = ObjectUtil.koranBotService.getSurah(chatId, inlineMessageId, data);
                 execute_update(surah);
             }
-            if (data.equals("back")) {
-               ObjectUtil.koranService.newMenyu(chatId,-10);
-                EditMessageReplyMarkup surah = ObjectUtil.koranBotService.getSurah(chatId, inlineMessageId);
+            if (data.equals(BACK_SURAX)) {
+                ObjectUtil.koranService.newMenyu(chatId, -10);
+                EditMessageReplyMarkup surah = ObjectUtil.koranBotService.getSurah(chatId, inlineMessageId, data);
                 execute_update(surah);
             }
-            if (data.startsWith("surahs")) {
-                SendMessage sendMessage = SurahLanguageService.quranMenyu(chatId, data);
+            if (data.startsWith(SURAH_STARTS)) {
+                SendMessage sendMessage = ObjectUtil.surahLanguageBotService.quranMenyu(chatId, data);
                 execute_(sendMessage);
             }
-            if (data.startsWith("lsuralar")) {
-                SendMessage sendMessage = new SendMessage();
-                String surah = SurahLanguageService.getLotinSurah(data);
-                sendMessage.setChatId(chatId);
-                sendMessage.setText(surah);
-                execute_(sendMessage);
+            if (data.startsWith(LSURALAR_STARTS)) {
+                String surah = ObjectUtil.surahLanguageBotService.getLotinSurah(data);
+                sendMessage(surah, chatId);
             }
-            if (data.startsWith("asuralar")) {
-                SendMessage sendMessage = new SendMessage();
-                String surah = SurahLanguageService.getAraSurah(data);
-                sendMessage.setChatId(chatId);
-                sendMessage.setText(surah);
-                execute_(sendMessage);
+            if (data.startsWith(ASURALAR_STARTS)) {
+                String surah = ObjectUtil.surahLanguageBotService.getAraSurah(data);
+                sendMessage(surah, chatId);
             }
-            if (data.equals("bomdod")) {
-                SendMessage sendMessage = new SendMessage();
-                sendMessage.setText("1.Ният қилиш\n" +
-                        "\n" +
-                        "Намоз вақти киргач, таҳорат билан, пок кийим билан, покиза жойда туриб, қиблага юзланамиз ва ният қиламиз\n");
-                sendMessage.setChatId(update.getCallbackQuery().getMessage().getChatId());
-                execute_(sendMessage);
+            if (data.equals(BOMDOD)) {
+                sendMessage(bomdodText, chatId);
             }
-           if (data.equals("tasbex")){
-               EditMessageReplyMarkup markup = Tasbex.getUpdateTasbex(chatId,inlineMessageId);
-               execute_update(markup);
-           }
+            if (data.equals(PESHIN)) {
+                sendMessage(peshinText, chatId);
+            }
+            if (data.equals(ASR)) {
+                sendMessage(asrText, chatId);
+            }
+            if (data.equals(SHOM)) {
+                sendMessage(shomText, chatId);
+            }
+            if (data.equals(XUFTON)) {
+                sendMessage(xuftonText, chatId);
+            }
+            if (data.equals(TASBEX_CALLBACK)) {
+                EditMessageReplyMarkup markup = ObjectUtil.tasbexBotService.getUpdateTasbex(chatId, inlineMessageId);
+                execute_update(markup);
+            }
+            if (data.equals(NEXTT) || data.equals(BACKK)) {
+                EditMessageText editMessageText = ObjectUtil.prayerTimeInlineBotService.nextAndBackSendPrayerTimes(chatId, inlineMessageId, data);
+                executeEditMessage(editMessageText);
+            }
         }
     }
+
     @Override
     public String getBotUsername() {
-        return "https://t.me/nmadir1bot";
+        return "@Uzbekmen_bot";
     }
 
     @Override
     public String getBotToken() {
-        return "7247776704:AAHVkJBT6xVG56HsJ8Hlo-MWy2NG1cLOJhc";
+        return "7385826567:AAFA8skdLgRWh3-bPGa7qPLh3NkVIMSWIc8";
+    }
+
+    private void executeEditMessage(EditMessageText editMessageText) {
+        try {
+            execute(editMessageText);
+        } catch (TelegramApiException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void execute_(SendMessage t) {
@@ -144,6 +168,7 @@ public class SakinaBot extends TelegramLongPollingBot {
             e.printStackTrace();
         }
     }
+
     private void execute_update(EditMessageReplyMarkup t) {
         try {
             execute(t);
@@ -151,14 +176,45 @@ public class SakinaBot extends TelegramLongPollingBot {
             e.printStackTrace();
         }
     }
-    public void sendTextMessage(long chatId, String text) {
-        SendMessage message = new SendMessage();
-        message.setChatId(chatId);
-        message.setText(text);
+
+    private void setSendAudio(SendAudio sendAudio) {
         try {
-            execute(message);
+            execute(sendAudio);
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
+    }
+
+    private SendMessage sendMessage(String text, Long chatId) {
+        SendMessage sendMessage = new SendMessage();
+        sendMessage.setText(text);
+        sendMessage.setChatId(chatId);
+        try {
+            execute(sendMessage);
+        } catch (TelegramApiException e) {
+            throw new RuntimeException(e);
+        }
+        return sendMessage;
+    }
+
+    public SendAudio sendMultipleAudios(Long chatId, String imomName) {
+        SendAudio sendAudio = new SendAudio();
+        String pathName = ImamNamesBotService.IMAM_MENU.get(imomName);
+        if (pathName == null) {
+            throw new RuntimeException("Imom topilmadi");
+        }
+
+        int n = 1;
+        for (int i = 1; i < 115; i++) {
+            String formatted = String.format("%03d", n);
+            String audioUrls = "https://server8.mp3quran.net/" + pathName + "/" + formatted + ".mp3";
+            sendAudio.setChatId(chatId);
+            System.out.println("Attempting to send audio from URL: " + audioUrls);
+            sendAudio.setAudio(new InputFile(audioUrls));
+            sendAudio.setCaption("Quran");
+            setSendAudio(sendAudio);
+            n += 1;
+        }
+        return sendAudio;
     }
 }

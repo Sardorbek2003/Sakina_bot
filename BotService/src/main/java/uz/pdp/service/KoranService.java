@@ -10,27 +10,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class KoranService {
-    private static final int SURAH = 114;
-    public List<Surahs> getStringList(List<Surahs> surahs, int n) {
-        List<Surahs> surahsList = new ArrayList<>();
-        for (int i = n; i < n + 10 && n <= SURAH; i++) {
-            Surahs surah = surahs.get(i);
-            surahsList.add(surah);
-        }
-        return surahsList;
-    }
+
+    private static final int TOTAL_SURAHS = 114;
+    private static final int PAGE_SIZE = 10;
 
     public List<Surahs> getSurahs() {
-        return JsonUtil.readGson(FilePath.PATH_SURAHS, new TypeReference<List<Surahs>>() {});
-    }
-
-    public void setSurahs(List<Surahs> surahs) {
-        JsonUtil.writeGson(FilePath.PATH_SURAHS, surahs);
+        return JsonUtil.readGson(FilePath.PATH_SURAHS, new TypeReference<>() {
+        });
     }
 
     public List<SurahDigitState> getSurahsState() {
-        return JsonUtil.readGson(FilePath.PATH_SURAHSTATE, new TypeReference<List<SurahDigitState>>() {
+        return JsonUtil.readGson(FilePath.PATH_SURAHSTATE, new TypeReference<>() {
         });
+    }
+
+    public List<Surahs> getStringList(List<Surahs> surahs, int startIndex) {
+        List<Surahs> surahsList = new ArrayList<>();
+        int endIndex = Math.min(startIndex + PAGE_SIZE, TOTAL_SURAHS);
+        for (int i = startIndex; i < endIndex; i++) {
+            surahsList.add(surahs.get(i));
+        }
+        return surahsList;
     }
 
     public void setSurahsState(List<SurahDigitState> surahsState) {
@@ -38,22 +38,26 @@ public class KoranService {
     }
 
     public void newMenyu(long chatId, int n) {
-        int k = 0;
-        List<SurahDigitState> states = new ArrayList<>();
-        for (SurahDigitState state : states) {
-            if (state.getChatId() == chatId) {
-                k = 10;
-                if (n == 0) {
-                    state.setId(0);
-                } else if (n == 10 || n == -10) {
-                    state.setId(state.getId() + n);
-                }
+        List<SurahDigitState> states = getSurahsState();
+        SurahDigitState state = states.stream()
+                .filter(s -> s.getChatId() == chatId)
+                .findFirst()
+                .orElse(null);
+
+        if (state != null) {
+            int newId = state.getId();
+            if (n == 0) {
+                newId = 0;
+            } else if (n == PAGE_SIZE || n == -PAGE_SIZE) {
+                newId = Math.max(0, Math.min(newId + n, TOTAL_SURAHS - PAGE_SIZE));
             }
+            state.setId(newId);
+        } else {
+            state = new SurahDigitState(0, chatId);
+            states.add(state);
         }
-        if (k == 10) {
-            setSurahsState(states);
-        }else {
-            setSurahsState(List.of(new SurahDigitState(0,chatId)));
-        }
+
+        setSurahsState(states);
     }
 }
+

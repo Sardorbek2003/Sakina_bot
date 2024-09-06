@@ -17,7 +17,8 @@ public class Koran {
     private String type;
     private int total_verses;
     private ArrayList<Verse> verses;
-    public class Verse{
+    @NoArgsConstructor
+    public static class Verse{
         public int id;
         public String text;
         public String transliteration;
